@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.sdp3.Pojo.Jobs;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,7 @@ public class JobService{
         }
 
         jobRepository.save(newJob);
-
-
     }
-
 
     public void deleteJobById(Long id){
         jobRepository.deleteById(id);
@@ -47,8 +45,26 @@ public class JobService{
     }
 
     public Optional<Jobs> findJobById(Long id){
-        return jobRepository.findById(id);
+        Optional<Jobs> job = jobRepository.findById(id);
+        if(job.isPresent()){
+            return job;
+        }
+        else{
+            throw new IllegalStateException("Job Does not Exist");
+        }
     }
 
+    @Transactional
+    public void updateJobs(Jobs updateJob){
+        Optional<Jobs> job = jobRepository.findById(updateJob.getId());
+
+        if(job.isPresent()){
+            jobRepository.save(updateJob);
+        }
+        else{
+            throw new IllegalStateException("Job not found");
+        }
+
+    }
 
 }

@@ -86,4 +86,18 @@ public class JobsController{
     }
 
 
+    @PatchMapping("/update")
+    public Jobreturn updateJob(@RequestBody Jobs job){
+        Jobreturn response = new Jobreturn();
+        try{
+            jobService.updateJobs(job);
+            response.message="Job Updated";
+            response.error=false;
+        }
+        catch (Exception e){
+            response.message=e.getMessage();
+            response.error=true;
+        }
+        return response;
+    }
 }
