@@ -10,30 +10,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.System.out;
+
 
 @RestController
 public class JobsController{
     @Autowired
     JobService jobService;
 
-    @PostMapping("/")
+    @PostMapping("/addjob")
     public Jobreturn addJobPost(@RequestBody Jobs job){
         Jobreturn response = new Jobreturn();
         try{
-            jobService.addJob(job);
+            Jobs newjob = new Jobs(job.getJob_title(),
+                    job.getCompany(),
+                    job.getWorkplace(),
+                    job.getJob_description(),
+                    job.getJob_location(),
+                    job.getEmployment_type(),
+                    job.getUser_id());
+            jobService.addJob(newjob);
             response.message="added successfully";
             response.error=false;
         }
         catch(Exception e){
-            response.message=e.getMessage();
+            System.out.println(e);
+            response.message="Failed to add";
             response.error=true;
         }
         return response;
     }
 
-    @GetMapping("/getall")
-    public Jobreturn getAll(){
+    @GetMapping("/getalljobs")
+    public Jobreturn getAllJobs(){
         Jobreturn response = new Jobreturn();
         try{
             List<Jobs> job = jobService.getAllJobs();
@@ -42,14 +50,14 @@ public class JobsController{
             response.ListData = job;
         }
         catch(Exception e){
-            response.message="failed";
+            response.message=e.getMessage();
             response.error=true;
             response.ListData=null;
         }
         return response;
     }
 
-    @GetMapping("/getbyid/{id}")
+    @GetMapping("/getjobsbyid/{id}")
     public Jobreturn getJobById(@PathVariable Long id){
         Jobreturn response = new Jobreturn();
         try{
@@ -60,7 +68,7 @@ public class JobsController{
 
         }
         catch (Exception e){
-            response.message = "Failed";
+            response.message = e.getMessage();
             response.error= true;
             response.data=null;
         }
@@ -68,7 +76,7 @@ public class JobsController{
         return response;
     }
 
-    @DeleteMapping("/deletebyid/{id}")
+    @DeleteMapping("/deletejobsbyid/{id}")
     public Jobreturn deleteJobById(@PathVariable Long id){
         Jobreturn response = new Jobreturn();
         try {
@@ -78,7 +86,8 @@ public class JobsController{
             response.error = false;
         }
         catch(Exception e){
-            response.message="Deletion Unsuccessfull "+id;
+
+            response.message=e.getMessage()+id;
             response.error=true;
         }
         response.data=null;
@@ -86,12 +95,12 @@ public class JobsController{
     }
 
 
-    @PatchMapping("/update")
+    @PatchMapping("/updatejobs")
     public Jobreturn updateJob(@RequestBody Jobs job){
         Jobreturn response = new Jobreturn();
         try{
             jobService.updateJobs(job);
-            response.message="Job Updated";
+            response.message="Job Updated "+job.getId();
             response.error=false;
         }
         catch (Exception e){

@@ -1,42 +1,47 @@
 package com.example.sdp3.Pojo;
 
-
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.format.DateTimeFormatter;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
 @Entity
 @Table(name="jobs_table")
 public class Jobs {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
     private Long id;
 
+
     @Column(name="job_title")
+    @NotNull
     private String job_title;
 
     @Column(name="company")
+    @NotNull
     private String company;
 
     @Column(name="workplace")
+    @NotNull
     private String workplace;
 
     @Column(name="job_description")
+    @NotNull
     private String job_description;
 
     @Column(name="job_location")
+    @NotNull
     private String job_location;
 
     @Column(name="employment_type")
+    @NotNull
     private String employment_type;
 
     @Column(name="user_id")
+    @NotNull
     private Long user_id;
 
     @Column
@@ -49,8 +54,7 @@ public class Jobs {
         this.created_at= new Date();
     }
     // args constructor
-    public Jobs(Long id, String job_title, String company, String workplace, String job_description, String job_location, String employment_type, Long user_id, Date created_at) {
-        this.id = id;
+    public Jobs(String job_title, String company, String workplace, String job_description, String job_location, String employment_type, Long user_id) {
         this.job_title = job_title;
         this.company = company;
         this.workplace = workplace;
@@ -58,7 +62,6 @@ public class Jobs {
         this.job_location = job_location;
         this.employment_type = employment_type;
         this.user_id = user_id;
-        this.created_at = created_at;
     }
 
     //No args constructor
@@ -68,6 +71,7 @@ public class Jobs {
     public Date getCreated_at() {
         return created_at;
     }
+
     public Long getId() {
         return id;
     }
@@ -75,7 +79,6 @@ public class Jobs {
     public void setId(Long id) {
         this.id = id;
     }
-
     public Long getUser_id() {
         return user_id;
     }
