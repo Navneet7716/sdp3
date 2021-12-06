@@ -12,7 +12,9 @@ import javax.validation.Valid;
 import com.example.sdp3.Pojo.ERole;
 import com.example.sdp3.Pojo.Role;
 import com.example.sdp3.Pojo.User;
+import com.example.sdp3.Pojo.UserProfile;
 import com.example.sdp3.Repository.RoleRepository;
+import com.example.sdp3.Repository.UserProfileRepository;
 import com.example.sdp3.Repository.UserRepository;
 import com.example.sdp3.Security.jwt.JwtUtils;
 import com.example.sdp3.Security.services.UserDetailsImpl;
@@ -44,6 +46,9 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserProfileRepository userProfileRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -109,7 +114,7 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case "user":
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
@@ -120,8 +125,10 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
         List<User> data = new ArrayList<>();
+        UserProfile userProfile = new UserProfile(user.getId(),null,null,null,null,null,null);
+        userProfileRepository.save(userProfile);
         data.add(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!",true,data));
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!",true,null));
     }
 }
