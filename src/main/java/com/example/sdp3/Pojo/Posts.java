@@ -1,5 +1,9 @@
 package com.example.sdp3.Pojo;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -8,7 +12,10 @@ import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.List;
 
-
+@TypeDef(
+        name = "list-array",
+        typeClass = ListArrayType.class
+)
 @Entity
 @Table(name = "posts_table")
 public class Posts {
@@ -33,16 +40,17 @@ public class Posts {
     @NotNull
     private String post_type;
 
-    @Column
-    @NotNull
+    @Column(nullable = true)
     private Long parentId;
 
     @Column
     @NotNull
     private String title;
 
-    @Column
-    @ElementCollection
+    @Type(type = "list-array")
+    @Column(
+            columnDefinition = "text[]"
+    )
     @NotNull
     private List<String> hashtags;
 

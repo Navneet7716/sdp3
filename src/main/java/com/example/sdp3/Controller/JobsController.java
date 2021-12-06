@@ -2,7 +2,6 @@ package com.example.sdp3.Controller;
 
 
 import com.example.sdp3.Pojo.Jobs;
-import com.example.sdp3.Repository.JobRepository;
 import com.example.sdp3.Service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,9 +20,9 @@ public class JobsController{
 
     @PostMapping("/addjob")
     @PreAuthorize("hasRole('USER')")
-    public Jobreturn addJobPost(@RequestBody Jobs job){
+    public Jobreturn addJobPost(@RequestBody Jobs job) {
         Jobreturn response = new Jobreturn();
-        try{
+        try {
             Jobs newjob = new Jobs(job.getJob_title(),
                     job.getCompany(),
                     job.getWorkplace(),
@@ -32,13 +31,13 @@ public class JobsController{
                     job.getEmployment_type(),
                     job.getUser_id());
             jobService.addJob(newjob);
-            response.message="added successfully";
-            response.error=false;
+            response.message = "Added Successfully";
+            response.error = false;
         }
         catch(Exception e){
-            System.out.println(e);
-            response.message="Failed to add";
-            response.error=true;
+            e.getMessage();
+            response.message = "failed to add";
+            response.error = true;
         }
         return response;
     }
@@ -54,6 +53,7 @@ public class JobsController{
         }
         catch(Exception e){
             response.message=e.getMessage();
+            response.message="failed";
             response.error=true;
             response.ListData=null;
         }
@@ -72,6 +72,7 @@ public class JobsController{
         }
         catch (Exception e){
             response.message = e.getMessage();
+            response.message = "Failed";
             response.error= true;
             response.data=null;
         }
@@ -91,6 +92,7 @@ public class JobsController{
         catch(Exception e){
 
             response.message=e.getMessage()+id;
+            response.message="Deletion Unsuccessfull "+id;
             response.error=true;
         }
         response.data=null;
@@ -104,6 +106,7 @@ public class JobsController{
         try{
             jobService.updateJobs(job);
             response.message="Job Updated "+job.getId();
+            response.message="Job Updated";
             response.error=false;
         }
         catch (Exception e){

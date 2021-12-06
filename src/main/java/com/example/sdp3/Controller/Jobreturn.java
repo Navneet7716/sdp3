@@ -15,7 +15,6 @@ public class Jobreturn {
 
     public boolean error;
 
-
     public Jobreturn() {
         this.data = null;
         this.ListData = null;

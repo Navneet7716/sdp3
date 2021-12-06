@@ -4,12 +4,19 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
 @Entity
 @Table(name="jobs_table")
 public class Jobs {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
@@ -44,16 +51,13 @@ public class Jobs {
     @NotNull
     private Long user_id;
 
+
     @Column
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
-    @PreUpdate
-    public void setUpdatedAt() {
-        this.created_at= new Date();
-    }
-    // args constructor
+
     public Jobs(String job_title, String company, String workplace, String job_description, String job_location, String employment_type, Long user_id) {
         this.job_title = job_title;
         this.company = company;
@@ -68,10 +72,13 @@ public class Jobs {
     public Jobs() {
 
     }
+    @PreUpdate
+    public void setCreated_at() {
+        this.created_at= new Date();
+    }
     public Date getCreated_at() {
         return created_at;
     }
-
     public Long getId() {
         return id;
     }
