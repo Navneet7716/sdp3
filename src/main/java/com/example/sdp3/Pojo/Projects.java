@@ -1,7 +1,10 @@
 package com.example.sdp3.Pojo;
 
 
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="projects_table")
@@ -24,6 +27,18 @@ public class Projects {
 
     @Column()
     private Long user_id;
+
+    @Column
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created_at = new Date();
+
+    @PreUpdate
+    public void setCreated_at() {
+        this.created_at= new Date();
+    }
+
+    public Date getCreated_at() {return this.created_at;}
 
 
     public Projects(Long id, String name, String git_link, String description, Long user_id) {

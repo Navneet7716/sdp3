@@ -1,7 +1,10 @@
 package com.example.sdp3.Pojo;
 
 
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "education_table")
@@ -27,6 +30,11 @@ public class Education {
     @Column()
     private Long user_id;
 
+    @Column
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created_at = new Date();
+
     public Education(Long id, String institution_name, String duration, String location, String degree_type, Long user_id) {
         this.id = id;
         this.institution_name = institution_name;
@@ -37,6 +45,15 @@ public class Education {
     }
 
     public Education() {
+    }
+
+    @PreUpdate
+    public void setCreated_at() {
+        this.created_at= new Date();
+    }
+
+    public Date getCreated_at() {
+        return created_at;
     }
 
     @Override
