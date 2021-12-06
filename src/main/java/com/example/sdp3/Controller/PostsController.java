@@ -23,8 +23,8 @@ public class PostsController{
             response.error = false;
         }
         catch(Exception e){
-            e.getMessage();
-            response.message = "Failed to add";
+
+            response.message = e.getMessage();
             response.error = true;
         }
         return response;
@@ -40,8 +40,8 @@ public class PostsController{
             response.error = false;
         }
         catch(Exception e){
-            e.getMessage();
-            response.message="Failed";
+
+            response.message=e.getMessage();
             response.error=false;
         }
         return response;
@@ -57,8 +57,8 @@ public class PostsController{
             response.error = false;
         }
         catch(Exception e){
-            e.getMessage();
-            response.message = "Did not find the Post";
+
+            response.message = e.getMessage();
             response.error = true;
         }
         return response;
@@ -74,8 +74,8 @@ public class PostsController{
             response.error = false;
         }
         catch(Exception e){
-            e.getMessage();
-            response.message = "Failed to delete";
+
+            response.message = e.getMessage();
             response.error = true;
         }
         return response;
