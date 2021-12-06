@@ -35,8 +35,8 @@ public class JobsController{
             response.error = false;
         }
         catch(Exception e){
-            e.getMessage();
-            response.message = "failed to add";
+
+            response.message = e.getMessage();
             response.error = true;
         }
         return response;
@@ -53,7 +53,6 @@ public class JobsController{
         }
         catch(Exception e){
             response.message=e.getMessage();
-            response.message="failed";
             response.error=true;
             response.ListData=null;
         }
@@ -72,7 +71,6 @@ public class JobsController{
         }
         catch (Exception e){
             response.message = e.getMessage();
-            response.message = "Failed";
             response.error= true;
             response.data=null;
         }
@@ -91,8 +89,7 @@ public class JobsController{
         }
         catch(Exception e){
 
-            response.message=e.getMessage()+id;
-            response.message="Deletion Unsuccessfull "+id;
+            response.message=e.getMessage()+ " " +id;
             response.error=true;
         }
         response.data=null;
@@ -106,7 +103,6 @@ public class JobsController{
         try{
             jobService.updateJobs(job);
             response.message="Job Updated "+job.getId();
-            response.message="Job Updated";
             response.error=false;
         }
         catch (Exception e){
