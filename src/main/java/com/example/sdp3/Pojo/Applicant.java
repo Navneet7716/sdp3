@@ -12,7 +12,6 @@ public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
-    @NotNull
     private Long id;
 
     @Column

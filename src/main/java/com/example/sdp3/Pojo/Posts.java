@@ -3,6 +3,7 @@ package com.example.sdp3.Pojo;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.List;
@@ -17,38 +18,48 @@ public class Posts {
     private Long id;
 
     @Column
+    @NotNull
     private Long user_id;
 
     @Column(name="profile_image", nullable=false)
+    @NotNull
     private String image;
 
     @Column
+    @NotNull
     private String description;
 
     @Column
+    @NotNull
     private String post_type;
 
     @Column
+    @NotNull
     private Long parentId;
 
     @Column
+    @NotNull
     private String title;
 
     @Column
     @ElementCollection
+    @NotNull
     private List<String> hashtags;
 
     @Column
     @CreatedDate
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
     @Column
     @CreatedDate
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated_at = new Date();
 
     @Column
+    @NotNull
     private Long like_count;
 
     public Posts(Long user_id, String image, String description, String post_type, Long parentId, String title, List<String> hashtags, Long like_count) {

@@ -3,17 +3,20 @@ package com.example.sdp3.Controller;
 import com.example.sdp3.Pojo.Applicant;
 import com.example.sdp3.Service.ApplicantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
 
 @RestController
+@RequestMapping("/api/applicant")
 public class ApplicantController{
 
     @Autowired
     ApplicantService applicantService;
 
     @PostMapping("/addapplicant")
+    @PreAuthorize("hasRole('USER')")
     public Applicantreturn addNewApplicant(@RequestBody Applicant applicant){
         Applicantreturn response = new Applicantreturn();
 
@@ -31,6 +34,7 @@ public class ApplicantController{
     }
 
     @GetMapping("/getallapplicants")
+    @PreAuthorize("hasRole('USER')")
     public Applicantreturn getApplicant(){
         Applicantreturn response = new Applicantreturn();
         try{
@@ -47,6 +51,7 @@ public class ApplicantController{
     }
 
     @GetMapping("/getapplicantbyid/{id}")
+    @PreAuthorize("hasRole('USER')")
     public Applicantreturn getApplicantById(@PathVariable Long id){
         Applicantreturn response = new Applicantreturn();
         try{
@@ -63,6 +68,7 @@ public class ApplicantController{
     }
 
     @DeleteMapping("/deleteapplicantbyid/{id}")
+    @PreAuthorize("hasRole('USER')")
     public Applicantreturn deleteApplicantById(@PathVariable  Long id){
         Applicantreturn response = new Applicantreturn();
         try{
@@ -79,6 +85,7 @@ public class ApplicantController{
     }
 
     @PatchMapping("/updateapplicant")
+    @PreAuthorize("hasRole('USER')")
     public Applicantreturn updateApplicant(@RequestBody Applicant updatedapplicant){
         Applicantreturn response = new Applicantreturn();
         try{

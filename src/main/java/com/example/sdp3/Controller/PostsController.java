@@ -3,14 +3,17 @@ package com.example.sdp3.Controller;
 import com.example.sdp3.Pojo.Posts;
 import com.example.sdp3.Service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/post")
 public class PostsController{
     @Autowired
     PostsService postsService;
 
     @PostMapping("/addposts")
+    @PreAuthorize("hasRole('USER')")
     public Postreturn addNewPosts(@RequestBody Posts posts){
          Postreturn response = new Postreturn();
 
@@ -28,6 +31,7 @@ public class PostsController{
     }
 
     @GetMapping("/getallposts")
+    @PreAuthorize("hasRole('USER')")
     public Postreturn getPosts(){
         Postreturn response = new Postreturn();
         try{
@@ -44,6 +48,7 @@ public class PostsController{
     }
 
     @GetMapping("/getpostbyid/{id}")
+    @PreAuthorize("hasRole('USER')")
     public Postreturn getPostById(@PathVariable Long id){
         Postreturn response = new Postreturn();
         try{
@@ -60,6 +65,7 @@ public class PostsController{
     }
 
     @DeleteMapping("/deletepostbyid/{id}")
+    @PreAuthorize("hasRole('USER')")
     public Postreturn deleteApplicantById(@PathVariable  Long id){
         Postreturn response = new Postreturn();
         try{
@@ -76,6 +82,7 @@ public class PostsController{
     }
 
     @PatchMapping("/updatepost")
+    @PreAuthorize("hasRole('USER')")
     public Postreturn updateApplicant(@RequestBody Posts updatedpost){
         Postreturn response = new Postreturn();
         try{
