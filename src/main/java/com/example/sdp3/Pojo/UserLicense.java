@@ -1,6 +1,6 @@
 package com.example.sdp3.Pojo;
 
-
+//Lincense PoJo
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
