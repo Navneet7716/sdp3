@@ -42,6 +42,49 @@ public class UserProfileController {
         }
     }
 
+    @PutMapping("user/profile/update")
+    public UserProfileResponse updateUserProfile(@RequestBody UserProfile userProfile)
+    {
+
+        UserProfile userProfile_new = userProfileService.getUserProfileById(userProfile.getId());
+
+        if(userProfile_new == null )
+        {
+            return new UserProfileResponse("UserProfile Not Found" , false,null);
+        }
+
+        try
+        {
+            userProfileService.updateUserProfile(userProfile);
+            return new UserProfileResponse("Profile Updated Successfully" , true, null);
+        }
+        catch(Exception e)
+        {
+            return new UserProfileResponse("Profile Updated Failed" , false, null);
+        }
+    }
+
+
+    @DeleteMapping("/user/profile/delete/{id}")
+    public UserProfileResponse deleteUserProfileById(@PathVariable Long id)
+    {
+        UserProfile userProfile = userProfileService.getUserProfileById(id);
+
+        if(userProfile == null)
+        {
+            return new UserProfileResponse("UserProfile Not found" , false , null);
+        }
+        try
+        {
+            userProfileService.deleteUserProfile(id);
+            return new UserProfileResponse("User Deleted Successfully" , true , null);
+        }
+        catch(Exception e)
+        {
+            return new UserProfileResponse("User Cannot Be Deleted" , false , null);
+        }
+    }
+
 
 
 
