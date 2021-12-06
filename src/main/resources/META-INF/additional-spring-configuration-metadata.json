@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "sdp.app.jwtSecret",
+      "type": "java.lang.String",
+      "description": "Description for sdp.app.jwtSecret."
+  }
+] }
