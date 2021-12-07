@@ -22,7 +22,10 @@ public class ExperienceService {
 
         return experienceRepository.findById(id).orElseThrow(() -> new IllegalStateException("Experience Not found"));
 
+    }
 
+    public void CreateExperience(Experience experience) {
+        experienceRepository.save(experience);
     }
 
     public List<Experience> getExperienceByUser_id(Long id)  {
