@@ -34,14 +34,8 @@ public class PostsService{
         }
     }
 
-    public Optional<Posts> findPostById(Long id){
-        Optional<Posts> posts = postsRepository.findById(id);
-        if(posts.isPresent()){
-            return posts;
-        }
-        else{
-            throw new IllegalStateException("Post Does not Exist");
-        }
+    public Posts findPostById(Long id){
+        return postsRepository.findById(id).orElseThrow(() -> new IllegalStateException("Post was not found"));
     }
 
     @Transactional
