@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="useractivity_table")
+@Table(name="activity_table")
 public class UserActivity {
 
     @Id
@@ -21,9 +21,8 @@ public class UserActivity {
     @Column()
     private Long post_id;
 
-    @Column()
-    private boolean like;
-
+    @Column(columnDefinition = "boolean default false")
+    private Boolean is_liked;
 
     @Column
     @CreatedDate
@@ -42,13 +41,6 @@ public class UserActivity {
 
     public Date getCreated_at() {return this.created_at;}
 
-    public UserActivity(Long id, Long user_id, Long post_id, boolean like, Date created_at) {
-        this.id = id;
-        this.user_id = user_id;
-        this.post_id = post_id;
-        this.like = like;
-        this.created_at = created_at;
-    }
 
     @Override
     public String toString() {
@@ -56,11 +48,25 @@ public class UserActivity {
                 "id=" + id +
                 ", user_id=" + user_id +
                 ", post_id=" + post_id +
-                ", like=" + like +
+//                ", like=" + like +
                 ", created_at=" + created_at +
                 '}';
     }
 
+    public UserActivity(Long id, Long user_id, Long post_id, boolean is_liked) {
+        this.id = id;
+        this.user_id = user_id;
+        this.post_id = post_id;
+        this.is_liked = is_liked;
+    }
+
+    public boolean getIs_liked() {
+        return is_liked;
+    }
+
+    public void setIs_liked(boolean is_liked) {
+        this.is_liked = is_liked;
+    }
 
     public Long getId() {
         return id;
@@ -86,11 +92,5 @@ public class UserActivity {
         this.post_id = post_id;
     }
 
-    public boolean isLike() {
-        return like;
-    }
 
-    public void setLike(boolean like) {
-        this.like = like;
-    }
 }
