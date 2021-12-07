@@ -15,11 +15,16 @@ import java.util.List;
 @RequestMapping("/api/test")
 public class UserLicenseController {
 
-    @Autowired
+    final
     UserLicenseService userLicenseService;
 
-    @Autowired
+    final
     UserProfileService userProfileService;
+
+    public UserLicenseController(UserLicenseService userLicenseService, UserProfileService userProfileService) {
+        this.userLicenseService = userLicenseService;
+        this.userProfileService = userProfileService;
+    }
 
 
     @GetMapping("user/licenses/{id}")
@@ -84,7 +89,7 @@ public class UserLicenseController {
     }
 
     @PutMapping("user/license/update")
-    public UserLicenseResponse updateUserProfile(@RequestBody UserLicense userLicense)
+    public UserLicenseResponse updateUserLicense(@RequestBody UserLicense userLicense)
     {
 
         UserLicense userLicense_new = userLicenseService.getUserLicenseById(userLicense.getId());

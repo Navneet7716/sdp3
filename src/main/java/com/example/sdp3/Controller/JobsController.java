@@ -23,14 +23,7 @@ public class JobsController{
     public Jobreturn addJobPost(@RequestBody Jobs job) {
         Jobreturn response = new Jobreturn();
         try {
-            Jobs newjob = new Jobs(job.getJob_title(),
-                    job.getCompany(),
-                    job.getWorkplace(),
-                    job.getJob_description(),
-                    job.getJob_location(),
-                    job.getEmployment_type(),
-                    job.getUser_id());
-            jobService.addJob(newjob);
+            jobService.addJob(job);
             response.message = "Added Successfully";
             response.error = false;
         }

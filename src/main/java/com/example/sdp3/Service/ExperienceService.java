@@ -49,6 +49,11 @@ public class ExperienceService {
 
     public void deleteExperienceById(Long id) {
 
+        boolean b = experienceRepository.existsById(id);
+        if (!b) {
+            throw new IllegalStateException("Experince with id " + id + " does not exists");
+        }
+
         experienceRepository.deleteById(id);
     }
 

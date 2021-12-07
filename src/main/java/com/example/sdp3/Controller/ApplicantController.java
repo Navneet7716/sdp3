@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/applicant")
 public class ApplicantController{
 
-    @Autowired
+    final
     ApplicantService applicantService;
+
+    public ApplicantController(ApplicantService applicantService) {
+        this.applicantService = applicantService;
+    }
 
     @PostMapping("/addapplicant")
     @PreAuthorize("hasRole('USER')")

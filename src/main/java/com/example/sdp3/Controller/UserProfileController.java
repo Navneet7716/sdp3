@@ -12,11 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/api/profile")
 public class UserProfileController {
 
-    @Autowired
+    final
     UserProfileService userProfileService;
+
+    public UserProfileController(UserProfileService userProfileService) {
+        this.userProfileService = userProfileService;
+    }
 
 
     @GetMapping("/user/profile/{id}")
