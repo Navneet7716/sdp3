@@ -28,7 +28,7 @@ public class Posts {
     @NotNull
     private Long user_id;
 
-    @Column(name="profile_image", nullable=false)
+    @Column(name="post_image", nullable=false)
     @NotNull
     private String image;
 

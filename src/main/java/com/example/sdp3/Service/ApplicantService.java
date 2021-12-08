@@ -40,14 +40,19 @@ public class ApplicantService {
         }
     }
 
-    public Optional<Applicant> findApplicantById(Long id){
-        Optional<Applicant> applicant = applicantRepository.findById(id);
-        if(applicant.isPresent()){
-            return applicant;
-        }
-        else{
-            throw new IllegalStateException("Applicant Does not Exist");
-        }
+    public Applicant findApplicantById(Long id){
+       return applicantRepository.findById(id).orElseThrow(()-> new IllegalStateException("no Applicant"));
+    }
+
+    public List<Applicant> findApplicantByJOBId(Long id){
+        return applicantRepository.getApplicantByJob_id(id).orElseThrow(() -> new IllegalStateException("Applicant Not found"));
+    }
+    public List<Applicant> findApplicantByUSERId(Long id){
+        return applicantRepository.getApplicantByUser_id(id).orElseThrow(() -> new IllegalStateException("Applicant Not found"));
+    }
+
+    public Applicant findApplicantByJOBIDandUSERID(Long job_id, Long user_id) {
+        return applicantRepository.getApplicantByJob_idAndAndUser_id(job_id,user_id).orElseThrow(()-> new IllegalStateException("Applicant Not found"));
     }
 
     @Transactional

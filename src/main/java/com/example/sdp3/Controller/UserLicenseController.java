@@ -6,6 +6,7 @@ import com.example.sdp3.Pojo.UserProfile;
 import com.example.sdp3.Service.UserLicenseService;
 import com.example.sdp3.Service.UserProfileService;
 import com.example.sdp3.payload.response.UserLicenseResponse;
+import com.example.sdp3.payload.response.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,24 +16,29 @@ import java.util.List;
 @RequestMapping("/api/test")
 public class UserLicenseController {
 
-    @Autowired
+    final
     UserLicenseService userLicenseService;
 
-    @Autowired
+    final
     UserProfileService userProfileService;
+
+    public UserLicenseController(UserLicenseService userLicenseService, UserProfileService userProfileService) {
+        this.userLicenseService = userLicenseService;
+        this.userProfileService = userProfileService;
+    }
 
 
     @GetMapping("user/licenses/{id}")
     public UserLicenseResponse getAllLicenses(@PathVariable Long id)
     {
-        UserProfile userProfile = userProfileService.getUserProfileById(id);
-        if(userProfile == null)
-        {
-            return new UserLicenseResponse("User Profile Not Found" , false , null);
-        }
+//        UserProfile userProfile = userProfileService.getUserProfileById(id);
+//        if(userProfile == null)
+//        {
+//            return new UserLicenseResponse("User Profile Not Found" , false , null);
+//        }
         try
         {
-            List<UserLicense> data = userLicenseService.getAllLicenses(id);
+            List<UserLicense> data = userLicenseService.getAllUserLicenses(id);
             return new UserLicenseResponse("Licenses Available " , true ,data);
         }
         catch(Exception e)
@@ -44,11 +50,11 @@ public class UserLicenseController {
     @PostMapping("/create/license/{id}")
     public UserLicenseResponse createuserLicense(@RequestBody UserLicense userLicense, @PathVariable Long id)
     {
-        UserProfile userProfile = userProfileService.getUserProfileById(id);
-        if(userProfile == null)
-        {
-            return new UserLicenseResponse("User Profile Not Found" , false , null);
-        }
+//        UserProfile userProfile = userProfileService.getUserProfileById(id);
+//        if(userProfile == null)
+//        {
+//            return new UserLicenseResponse("User Profile Not Found" , false , null);
+//        }
         try{
 
             userLicenseService.createUserLicense(id,userLicense);
@@ -65,26 +71,17 @@ public class UserLicenseController {
     @DeleteMapping("/user/delete/license/{id}")
     public UserLicenseResponse deleteUserLicense(@PathVariable Long id)
     {
-        UserLicense userLicense = userLicenseService.getUserLicenseById(id);
-
-        if(userLicense == null)
-        {
-            return new UserLicenseResponse("License Not found" , false , null);
-        }
-
-        try
-        {
-            userLicenseService.deleteUserLicense(id);
-            return new UserLicenseResponse("License Deleted Successfully" , true ,null);
-        }
-        catch (Exception e)
-        {
-            return new UserLicenseResponse("Error Occured" , false , null);
-        }
+       try {
+           userLicenseService.deleteUserLicense(id);
+           return new UserLicenseResponse("Deleted Successfully",true,null);
+       }
+       catch (Exception e) {
+           return new UserLicenseResponse(e.getMessage(), false,null);
+       }
     }
 
     @PutMapping("user/license/update")
-    public UserLicenseResponse updateUserProfile(@RequestBody UserLicense userLicense)
+    public UserLicenseResponse updateUserLicense(@RequestBody UserLicense userLicense)
     {
 
         UserLicense userLicense_new = userLicenseService.getUserLicenseById(userLicense.getId());

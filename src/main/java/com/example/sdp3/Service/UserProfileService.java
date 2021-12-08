@@ -7,6 +7,8 @@ import com.example.sdp3.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 
 @Service
 public class UserProfileService {
@@ -29,6 +31,7 @@ public class UserProfileService {
     }
 
 
+    @Transactional
     public void updateUserProfile(UserProfile userProfile)
     {
 

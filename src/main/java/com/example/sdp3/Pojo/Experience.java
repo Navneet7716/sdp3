@@ -1,7 +1,10 @@
 package com.example.sdp3.Pojo;
 
 
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Experience_table")
@@ -24,8 +27,21 @@ public class Experience {
     @Column()
     private Long user_id;
 
+    @Column
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created_at = new Date();
+
     public Experience() {
 
+    }
+    @PreUpdate
+    public void setCreated_at() {
+        this.created_at= new Date();
+    }
+
+    public Date getCreated_at() {
+        return created_at;
     }
 
     public Long getId() {

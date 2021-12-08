@@ -33,15 +33,15 @@ public class UserProfile {
 
 
     @Column
-    @Size(max = 100)
+    @Size(max = 250)
     private String bio;
 
     @Column
-    @Size(max = 20)
+    @Size(max = 100)
     private String github_link;
 
     @Column
-    @Size(max = 20)
+    @Size(max = 100)
     private String linkedIn_link;
 
 
@@ -59,7 +59,7 @@ public class UserProfile {
 
 
     @Column
-    @Size(max = 100)
+    @Size(max = 1000)
     private String profile_image;
 
 

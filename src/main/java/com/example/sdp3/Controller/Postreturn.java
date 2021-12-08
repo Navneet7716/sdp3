@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class Postreturn {
     public String message;
-    public Optional<Posts> data;
+    public Posts data;
 
     public List<Posts> ListData;
 

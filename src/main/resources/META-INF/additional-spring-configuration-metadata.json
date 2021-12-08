@@ -4,5 +4,15 @@
       "name": "sdp.app.jwtSecret",
       "type": "java.lang.String",
       "description": "Description for sdp.app.jwtSecret."
-  }
-] }
+    },
+    {
+      "name": "sdp.app.jwtExpirationMs",
+      "type": "java.lang.String",
+      "description": "Description for sdp.app.jwtExpirationMs."
+    },
+    {
+      "name": "sdp.app.jwtSecret",
+      "type": "java.lang.String",
+      "description": "Description for sdp.app.jwtSecret."
+    }
+  ] }
