@@ -5,6 +5,7 @@ import com.example.sdp3.Pojo.Experience;
 import com.example.sdp3.Repository.ExperienceRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,6 +36,7 @@ public class ExperienceService {
 
     }
 
+    @Transactional
     public void updateExperience(Experience UpdatedExperience) {
         Experience experience = experienceRepository.findById(UpdatedExperience.getId()).orElseThrow(() -> new IllegalStateException("Experience Not found"));
 

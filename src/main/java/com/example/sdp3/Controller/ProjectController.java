@@ -46,6 +46,27 @@ public class ProjectController {
 
     }
 
+    @PostMapping("/add")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<ProjectResponse> createProject(@RequestBody Projects projects) {
+        ProjectResponse projectResponse = new ProjectResponse();
+        try {
+            projectService.create(projects);
+            projectResponse.message = "success";
+            projectResponse.error = false;
+            return ResponseEntity.status(201).body(projectResponse);
+
+        }
+        catch (Exception e) {
+
+            projectResponse.error = true;
+            projectResponse.message = e.getMessage();
+
+            return ResponseEntity.status(400).body(projectResponse);
+        }
+    }
+
+
     @GetMapping("/getbyid/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ProjectResponse> getbyID(@PathVariable Long id) {

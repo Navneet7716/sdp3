@@ -1,7 +1,6 @@
 package com.example.sdp3.Service;
 
 
-import com.example.sdp3.Controller.Jobreturn;
 import com.example.sdp3.Repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +10,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static java.lang.System.out;
-
 @Service
 public class JobService{
 
@@ -24,12 +17,6 @@ public class JobService{
     JobRepository jobRepository;
 
     public void addJob(Jobs newJob){
-        Optional<Jobs> job = jobRepository.findById(newJob.getId());
-
-        if (job.isPresent()) {
-            throw new IllegalStateException("Job Already Present");
-        }
-
         jobRepository.save(newJob);
     }
 
@@ -56,8 +43,13 @@ public class JobService{
             }
         }
 
+    public List<Jobs> findJobByUserId (Long id){
+        return jobRepository.findAllByUser_id(id).orElseThrow(() -> new IllegalStateException("No Items found."));
 
-        @Transactional
+    }
+
+
+    @Transactional
         public void updateJobs(Jobs updateJob){
             Optional<Jobs> job = jobRepository.findById(updateJob.getId());
 

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/job")
 public class JobsController{
@@ -36,6 +36,7 @@ public class JobsController{
     }
 
     @GetMapping("/getalljobs")
+    @PreAuthorize("hasRole('USER')")
     public Jobreturn getAllJobs(){
         Jobreturn response = new Jobreturn();
         try{
@@ -60,6 +61,25 @@ public class JobsController{
             response.message = "Success";
             response.error= false;
             response.data=job;
+
+        }
+        catch (Exception e){
+            response.message = e.getMessage();
+            response.error= true;
+            response.data=null;
+        }
+
+        return response;
+    }
+
+    @GetMapping("/getjobsbyuserid/{id}")
+    public Jobreturn getjobsbyuserid(@PathVariable Long id){
+        Jobreturn response = new Jobreturn();
+        try{
+            List<Jobs> job = jobService.findJobByUserId(id);
+            response.message = "Success";
+            response.error= false;
+            response.ListData=job;
 
         }
         catch (Exception e){

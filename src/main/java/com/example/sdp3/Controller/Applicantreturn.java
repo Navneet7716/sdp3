@@ -9,7 +9,7 @@ public class Applicantreturn {
     public String message;
     public boolean error;
 
-    public Optional<Applicant> data;
+    public Applicant data;
     public List<Applicant> ListData;
 
 

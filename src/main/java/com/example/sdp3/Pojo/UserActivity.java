@@ -15,10 +15,10 @@ public class UserActivity {
     @Column(columnDefinition = "serial")
     private Long id;
 
-    @Column()
+    @Column(nullable = false)
     private Long user_id;
 
-    @Column()
+    @Column(nullable = false)
     private Long post_id;
 
     @Column(columnDefinition = "boolean default false")

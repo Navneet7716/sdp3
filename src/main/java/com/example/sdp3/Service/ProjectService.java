@@ -5,6 +5,7 @@ import com.example.sdp3.Pojo.Projects;
 import com.example.sdp3.Repository.ProjectsRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,7 +56,7 @@ public class ProjectService {
 
 
     // update by id
-
+    @Transactional
     public void update(Projects projects) {
 
         Projects projects1 = projectsRepository.findById(projects.getId()).orElseThrow(() -> new IllegalStateException("Project doesn't exist"));
@@ -67,6 +68,20 @@ public class ProjectService {
         }
         else {
             throw new IllegalStateException("Unexpected data");
+        }
+
+    }
+
+    // create
+
+    public void create(Projects projects) {
+        try {
+
+            projectsRepository.save(projects);
+
+        }
+        catch (Exception e) {
+            throw new IllegalStateException("Couldn't create project");
         }
 
     }

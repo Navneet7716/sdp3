@@ -16,10 +16,10 @@ public class Follow {
     private Long id;
 
 
-    @Column()
+    @Column(nullable = false)
     private Long source_userid;
 
-    @Column()
+    @Column(nullable = false)
     private Long target_userid;
 
     @Column

@@ -71,6 +71,58 @@ public class ApplicantController{
         return response;
     }
 
+    @GetMapping("/getapplicantbyjobid/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public Applicantreturn getApplicantByJOBId(@PathVariable Long id){
+        Applicantreturn response = new Applicantreturn();
+        try{
+            response.ListData = applicantService.findApplicantByJOBId(id);
+            response.message = "Found the applicant";
+            response.error = false;
+        }
+        catch(Exception e){
+
+            response.message =  e.getMessage();
+            response.error = true;
+        }
+        return response;
+    }
+
+    @GetMapping("/getapplicantbyuserid/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public Applicantreturn getApplicantByUserId(@PathVariable Long id){
+        Applicantreturn response = new Applicantreturn();
+        try{
+            response.ListData = applicantService.findApplicantByUSERId(id);
+            response.message = "Found the applicant";
+            response.error = false;
+        }
+        catch(Exception e){
+
+            response.message =  e.getMessage();
+            response.error = true;
+        }
+        return response;
+    }
+
+    @GetMapping("/getapplicantbyuseridandjobid/{job_id}/{user_id}")
+    @PreAuthorize("hasRole('USER')")
+    public Applicantreturn getApplicantByUserandJobId(@PathVariable Long job_id, @PathVariable Long user_id){
+        Applicantreturn response = new Applicantreturn();
+        try{
+            response.data = applicantService.findApplicantByJOBIDandUSERID(job_id,user_id);
+            response.message = "Found the applicant";
+            response.error = false;
+        }
+        catch(Exception e){
+
+            response.message =  e.getMessage();
+            response.error = true;
+        }
+        return response;
+    }
+
+
     @DeleteMapping("/deleteapplicantbyid/{id}")
     @PreAuthorize("hasRole('USER')")
     public Applicantreturn deleteApplicantById(@PathVariable  Long id){
