@@ -5,6 +5,7 @@ import com.example.sdp3.Pojo.Follow;
 import com.example.sdp3.Service.FollowService;
 import com.example.sdp3.payload.response.FollowResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +21,7 @@ public class FollowController {
 
 
     @GetMapping("/getfollowers/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<FollowResponse> getFollowers(@PathVariable Long id) {
         FollowResponse followResponse = new FollowResponse();
         try {
@@ -38,6 +40,7 @@ public class FollowController {
     }
 
     @GetMapping("/getFollows/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<FollowResponse> getFollows(@PathVariable Long id) {
         FollowResponse followResponse = new FollowResponse();
         try {
@@ -56,6 +59,7 @@ public class FollowController {
     }
 
     @GetMapping("/getFollowsandFollowers/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<FollowResponse> getFollowsandFollowers(@PathVariable Long id) {
         FollowResponse followResponse = new FollowResponse();
         try {
@@ -76,6 +80,7 @@ public class FollowController {
     }
 
     @PostMapping("/follow")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<FollowResponse> follow(@RequestBody Follow follow) {
         FollowResponse followResponse = new FollowResponse();
         try {

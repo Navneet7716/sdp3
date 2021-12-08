@@ -8,6 +8,7 @@ import com.example.sdp3.Service.UserProfileService;
 import com.example.sdp3.payload.response.UserLicenseResponse;
 import com.example.sdp3.payload.response.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class UserLicenseController {
 
 
     @GetMapping("user/licenses/{id}")
+    @PreAuthorize("hasRole('USER')")
     public UserLicenseResponse getAllLicenses(@PathVariable Long id)
     {
 //        UserProfile userProfile = userProfileService.getUserProfileById(id);
@@ -48,6 +50,7 @@ public class UserLicenseController {
     }
 
     @PostMapping("/create/license/{id}")
+    @PreAuthorize("hasRole('USER')")
     public UserLicenseResponse createuserLicense(@RequestBody UserLicense userLicense, @PathVariable Long id)
     {
 //        UserProfile userProfile = userProfileService.getUserProfileById(id);
@@ -69,6 +72,7 @@ public class UserLicenseController {
 
 
     @DeleteMapping("/user/delete/license/{id}")
+    @PreAuthorize("hasRole('USER')")
     public UserLicenseResponse deleteUserLicense(@PathVariable Long id)
     {
        try {
@@ -81,6 +85,7 @@ public class UserLicenseController {
     }
 
     @PutMapping("user/license/update")
+    @PreAuthorize("hasRole('USER')")
     public UserLicenseResponse updateUserLicense(@RequestBody UserLicense userLicense)
     {
 

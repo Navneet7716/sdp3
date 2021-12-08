@@ -6,6 +6,7 @@ import com.example.sdp3.Service.UserProfileService;
 import com.example.sdp3.payload.response.MessageResponse;
 import com.example.sdp3.payload.response.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class UserProfileController {
 
 
     @GetMapping("/user/profile/{id}")
+    @PreAuthorize("hasRole('USER')")
     public UserProfileResponse getUserById(@PathVariable Long id)
     {
         UserProfile userProfile = userProfileService.getUserProfileById(id);
@@ -47,6 +49,7 @@ public class UserProfileController {
     }
 
     @PutMapping("user/profile/update")
+    @PreAuthorize("hasRole('USER')")
     public UserProfileResponse updateUserProfile(@RequestBody UserProfile userProfile)
     {
 
@@ -70,6 +73,7 @@ public class UserProfileController {
 
 
     @DeleteMapping("/user/profile/delete/{id}")
+    @PreAuthorize("hasRole('USER')")
     public UserProfileResponse deleteUserProfileById(@PathVariable Long id)
     {
         UserProfile userProfile = userProfileService.getUserProfileById(id);
