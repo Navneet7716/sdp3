@@ -2,8 +2,12 @@ package com.example.sdp3.Controller;
 
 
 import com.example.sdp3.Pojo.Jobs;
+import com.example.sdp3.Pojo.Posts;
 import com.example.sdp3.Service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,20 +41,13 @@ public class JobsController{
 
     @GetMapping("/getalljobs")
     @PreAuthorize("hasRole('USER')")
-    public Jobreturn getAllJobs(){
-        Jobreturn response = new Jobreturn();
-        try{
-            List<Jobs> job = jobService.getAllJobs();
-            response.message="Success";
-            response.error=false;
-            response.ListData = job;
-        }
-        catch(Exception e){
-            response.message=e.getMessage();
-            response.error=true;
-            response.ListData=null;
-        }
-        return response;
+    public ResponseEntity<List<Jobs>> getAllJobs( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize,
+                                                  @RequestParam(defaultValue = "id") String sortBy){
+        List<Jobs> list = jobService.getAllJobs(pageNo, pageSize, sortBy);
+
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+
     }
 
     @GetMapping("/getjobsbyid/{id}")
@@ -73,22 +70,13 @@ public class JobsController{
     }
 
     @GetMapping("/getjobsbyuserid/{id}")
-    public Jobreturn getjobsbyuserid(@PathVariable Long id){
-        Jobreturn response = new Jobreturn();
-        try{
-            List<Jobs> job = jobService.findJobByUserId(id);
-            response.message = "Success";
-            response.error= false;
-            response.ListData=job;
+    public ResponseEntity<List<Jobs>> getjobsbyuserid(@RequestParam(defaultValue = "0") Integer pageNo,
+                                     @RequestParam(defaultValue = "10") Integer pageSize,
+                                     @RequestParam(defaultValue = "id") String sortBy,@PathVariable Long id){
+        List<Jobs> list = jobService.findJobByUserId(pageNo, pageSize, sortBy, id);
 
-        }
-        catch (Exception e){
-            response.message = e.getMessage();
-            response.error= true;
-            response.data=null;
-        }
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
 
-        return response;
     }
 
     @DeleteMapping("/deletejobsbyid/{id}")

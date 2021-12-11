@@ -47,9 +47,8 @@ public class Jobs {
     @NotNull
     private String employment_type;
 
-    @Column(name="user_id")
-    @NotNull
-    private Long user_id;
+    @Column(nullable = false)
+    private Long userId;
 
 
     @Column
@@ -65,7 +64,7 @@ public class Jobs {
         this.job_description = job_description;
         this.job_location = job_location;
         this.employment_type = employment_type;
-        this.user_id = user_id;
+        this.userId = user_id;
     }
 
     //No args constructor
@@ -87,11 +86,11 @@ public class Jobs {
         this.id = id;
     }
     public Long getUser_id() {
-        return user_id;
+        return this.userId;
     }
 
     public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+        this.userId = user_id;
     }
     public String getJob_title() {
         return job_title;
@@ -151,7 +150,7 @@ public class Jobs {
                 ", job_description='" + job_description + '\'' +
                 ", job_location='" + job_location + '\'' +
                 ", employment_type='" + employment_type + '\'' +
-                ", user_id=" + user_id +
+                ", user_id=" + userId +
                 ", created_at=" + created_at +
                 '}';
     }
