@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(value = "*" , maxAge = 3600)
 @RestController
 @RequestMapping("/api/experience")
 public class ExperienceController {
