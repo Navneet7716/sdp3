@@ -28,8 +28,7 @@ public class Posts {
     @NotNull
     private Long user_id;
 
-    @Column(name="post_image", nullable=false)
-    @NotNull
+    @Column(name="post_image", nullable=true)
     private String image;
 
     @Column
@@ -51,23 +50,19 @@ public class Posts {
     @Column(
             columnDefinition = "text[]"
     )
-    @NotNull
     private List<String> hashtags;
 
     @Column
     @CreatedDate
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
     @Column
     @CreatedDate
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated_at = new Date();
 
     @Column
-    @NotNull
     private Long like_count;
 
     public Posts(Long user_id, String image, String description, String post_type, Long parentId, String title, List<String> hashtags, Long like_count) {

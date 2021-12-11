@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
-
+@CrossOrigin(value = "*",maxAge = 3600)
 @RestController
 @RequestMapping("/api/applicant")
 public class ApplicantController{
