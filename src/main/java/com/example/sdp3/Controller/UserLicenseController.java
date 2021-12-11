@@ -33,11 +33,6 @@ public class UserLicenseController {
     @PreAuthorize("hasRole('USER')")
     public UserLicenseResponse getAllLicenses(@PathVariable Long id)
     {
-//        UserProfile userProfile = userProfileService.getUserProfileById(id);
-//        if(userProfile == null)
-//        {
-//            return new UserLicenseResponse("User Profile Not Found" , false , null);
-//        }
         try
         {
             List<UserLicense> data = userLicenseService.getAllUserLicenses(id);
@@ -53,11 +48,6 @@ public class UserLicenseController {
     @PreAuthorize("hasRole('USER')")
     public UserLicenseResponse createuserLicense(@RequestBody UserLicense userLicense, @PathVariable Long id)
     {
-//        UserProfile userProfile = userProfileService.getUserProfileById(id);
-//        if(userProfile == null)
-//        {
-//            return new UserLicenseResponse("User Profile Not Found" , false , null);
-//        }
         try{
 
             userLicenseService.createUserLicense(id,userLicense);

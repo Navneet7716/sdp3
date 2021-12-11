@@ -81,24 +81,6 @@ public class PostsController{
         return response;
     }
 
-    @GetMapping("/getpostbyuserid/{id}")
-    @PreAuthorize("hasRole('USER')")
-    public Postreturn getPostByUSERID(@PathVariable Long id){
-        Postreturn response = new Postreturn();
-        try{
-            response.data= postsService.getPostByUserId(id);
-            response.message = "Found the Post";
-            response.error = false;
-        }
-        catch(Exception e){
-
-            response.message = e.getMessage();
-            response.error = true;
-        }
-        return response;
-    }
-
-
     @DeleteMapping("/deletepostbyid/{id}")
     @PreAuthorize("hasRole('USER')")
     public Postreturn deleteApplicantById(@PathVariable  Long id){

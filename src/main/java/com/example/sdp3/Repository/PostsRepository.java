@@ -14,7 +14,4 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
     @Query("select p from Posts p where p.user_id=?1")
     Optional<List<Posts>> findAllByUser_id(Long id);
 
-    @Query("select p from Posts p where p.user_id=?1")
-    Optional<Posts> findByUser_id(Long id);
-
 }

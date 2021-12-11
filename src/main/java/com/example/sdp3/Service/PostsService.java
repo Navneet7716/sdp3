@@ -42,10 +42,6 @@ public class PostsService{
         return postsRepository.findAllByUser_id(id).orElseThrow(() -> new IllegalStateException("No Posts available."));
     }
 
-    public Posts getPostByUserId(Long id) {
-        return postsRepository.findByUser_id(id).orElseThrow(() -> new IllegalStateException("No Posts available."));
-    }
-
     @Transactional
     public void updatePost(Posts updatePost){
         Optional<Posts> posts = postsRepository.findById(updatePost.getId());
