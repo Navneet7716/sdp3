@@ -1,12 +1,18 @@
 package com.example.sdp3.Service;
 
 
+import com.example.sdp3.Pojo.Posts;
 import com.example.sdp3.Repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.sdp3.Pojo.Jobs;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,13 +30,15 @@ public class JobService{
         jobRepository.deleteById(id);
     }
 
-    public List<Jobs> getAllJobs() {
-        List<Jobs> job = jobRepository.findAll();
-        if (job.size() != 0) {
-            return job;
-        }
-        else{
-            throw new IllegalStateException("Jobs Don't Exist");
+    public List<Jobs> getAllJobs(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+
+        Page<Jobs> pagedResult = jobRepository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Jobs>();
         }
     }
 
@@ -43,9 +51,15 @@ public class JobService{
             }
         }
 
-    public List<Jobs> findJobByUserId (Long id){
-        return jobRepository.findAllByUser_id(id).orElseThrow(() -> new IllegalStateException("No Items found."));
+    public List<Jobs> findJobByUserId (Integer pageNo, Integer pageSize, String sortBy,Long id){
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
+        Page<Jobs> pagedResult = jobRepository.findAllByUserId(id,paging);
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Jobs>();
+        }
     }
 
 

@@ -5,15 +5,24 @@ import com.example.sdp3.Service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(value = "*",maxAge = 3600)
 @RestController
 @RequestMapping("/api/post")
 public class PostsController{
-    @Autowired
+    final
     PostsService postsService;
+
+    public PostsController(PostsService postsService) {
+        this.postsService = postsService;
+    }
 
     @PostMapping("/addposts")
     @PreAuthorize("hasRole('USER')")
@@ -36,20 +45,12 @@ public class PostsController{
 
     @GetMapping("/getallposts")
     @PreAuthorize("hasRole('USER')")
-    public Postreturn getPosts(@RequestParam(defaultValue = "0") Integer pageno, @RequestParam(defaultValue = "5") Integer pageSize,
-                               @RequestParam(defaultValue = "createdAt") String sortBy){
-        Postreturn response = new Postreturn();
-        try{
-            response.ListData = postsService.getAllPosts(pageno, pageSize, sortBy);
-            response.message = "Success";
-            response.error = false;
-        }
-        catch(Exception e){
+    public ResponseEntity<List<Posts>> getPosts(  @RequestParam(defaultValue = "0") Integer pageNo,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize,
+                                                  @RequestParam(defaultValue = "id") String sortBy){
+        List<Posts> list = postsService.getAllPosts(pageNo, pageSize, sortBy);
 
-            response.message=e.getMessage();
-            response.error=false;
-        }
-        return response;
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/getpostbyid/{id}")
@@ -71,19 +72,12 @@ public class PostsController{
 
     @GetMapping("/getallpostbyuserid/{id}")
     @PreAuthorize("hasRole('USER')")
-    public Postreturn getallPostByUSERID(@PathVariable Long id){
-        Postreturn response = new Postreturn();
-        try{
-            response.ListData = postsService.getAllPostByUserId(id);
-            response.message = "Found the Posts";
-            response.error = false;
-        }
-        catch(Exception e){
+    public ResponseEntity<List<Posts>> getallPostByUSERID( @RequestParam(defaultValue = "0") Integer pageNo,
+                                                           @RequestParam(defaultValue = "10") Integer pageSize,
+                                                           @RequestParam(defaultValue = "id") String sortBy,@PathVariable Long id){
+        List<Posts> list = postsService.getAllPostByUserId(pageNo, pageSize, sortBy, id);
 
-            response.message = e.getMessage();
-            response.error = true;
-        }
-        return response;
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/deletepostbyid/{id}")
