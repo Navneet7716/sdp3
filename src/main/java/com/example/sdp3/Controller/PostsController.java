@@ -3,6 +3,8 @@ package com.example.sdp3.Controller;
 import com.example.sdp3.Pojo.Posts;
 import com.example.sdp3.Service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ public class PostsController{
 
         try{
             postsService.addPosts(posts);
+
             response.message = "Added Successfully";
             response.error = false;
         }
@@ -33,10 +36,11 @@ public class PostsController{
 
     @GetMapping("/getallposts")
     @PreAuthorize("hasRole('USER')")
-    public Postreturn getPosts(){
+    public Postreturn getPosts(@RequestParam(defaultValue = "0") Integer pageno, @RequestParam(defaultValue = "5") Integer pageSize,
+                               @RequestParam(defaultValue = "createdAt") String sortBy){
         Postreturn response = new Postreturn();
         try{
-            response.ListData = postsService.getAllPosts();
+            response.ListData = postsService.getAllPosts(pageno, pageSize, sortBy);
             response.message = "Success";
             response.error = false;
         }

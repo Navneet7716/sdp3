@@ -4,6 +4,7 @@ package com.example.sdp3.Service;
 import com.example.sdp3.Pojo.Posts;
 import com.example.sdp3.Repository.PostsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -24,8 +25,10 @@ public class PostsService{
         postsRepository.deleteById(id);
     }
 
-    public List<Posts> getAllPosts(){
-        List<Posts> posts = postsRepository.findAll();
+    public List<Posts> getAllPosts(Integer pageno, Integer pageSize, String sortBy){
+
+        List<Posts> posts = postsRepository.findAll(Sort.by(sortBy).descending());
+
         if(posts.size()!=0){
             return posts;
         }
@@ -35,11 +38,12 @@ public class PostsService{
     }
 
     public Posts findPostById(Long id){
-        return postsRepository.findById(id).orElseThrow(() -> new IllegalStateException("Post was not found"));
+        return postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Post was not found"));
     }
 
     public List<Posts> getAllPostByUserId(Long id) {
-        return postsRepository.findAllByUser_id(id).orElseThrow(() -> new IllegalStateException("No Posts available."));
+        return postsRepository.findAllByUserIdOrderByCreatedAtDesc(id).orElseThrow(() -> new IllegalStateException("No Posts available."));
     }
 
     @Transactional

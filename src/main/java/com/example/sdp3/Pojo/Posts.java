@@ -26,7 +26,7 @@ public class Posts {
 
     @Column
     @NotNull
-    private Long user_id;
+    private Long userId;
 
     @Column(name="post_image", nullable=true)
     private String image;
@@ -55,18 +55,18 @@ public class Posts {
     @Column
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at = new Date();
+    private Date createdAt = new Date();
 
     @Column
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updated_at = new Date();
+    private Date updatedAt = new Date();
 
     @Column
     private Long like_count;
 
     public Posts(Long user_id, String image, String description, String post_type, Long parentId, String title, List<String> hashtags, Long like_count) {
-        this.user_id = user_id;
+        this.userId = user_id;
         this.image = image;
         this.description = description;
         this.post_type = post_type;
@@ -89,11 +89,11 @@ public class Posts {
     }
 
     public Long getUser_id() {
-        return user_id;
+        return userId;
     }
 
     public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+        this.userId = user_id;
     }
 
     public String getImage() {
@@ -145,20 +145,20 @@ public class Posts {
     }
 
     public Date getCreated_at() {
-        return created_at;
+        return createdAt;
     }
 
     @PreUpdate
     public void setUpdatedAt() {
-        this.created_at= new Date();
+        this.createdAt= new Date();
     }
 
     public Date getUpdated_at() {
-        return updated_at;
+        return updatedAt;
     }
 
     public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
+        this.updatedAt = updated_at;
     }
 
     public Long getLike_count() {
