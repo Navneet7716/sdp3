@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/api/userapi")
 public class TestController {
 
     @Autowired
@@ -51,6 +51,7 @@ public class TestController {
     }
 
     @GetMapping("/user/{id}")
+    @PreAuthorize("hasRole('USER')")
     public MessageResponse getUserById(@PathVariable Long id)
     {
         User user = userService.getUserById(id);
@@ -61,6 +62,7 @@ public class TestController {
 
         List<User> data = new ArrayList<>();
         data.add(user);
+        data.get(0).setPassword("");
         try
         {
                 return new MessageResponse("Users Available ",true,data);
