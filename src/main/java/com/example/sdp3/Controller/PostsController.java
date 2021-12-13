@@ -45,10 +45,10 @@ public class PostsController{
 
     @GetMapping("/getallposts")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<Posts>> getPosts(  @RequestParam(defaultValue = "0") Integer pageNo,
+    public ResponseEntity<Page<Posts>> getPosts(  @RequestParam(defaultValue = "0") Integer pageNo,
                                                   @RequestParam(defaultValue = "10") Integer pageSize,
                                                   @RequestParam(defaultValue = "id") String sortBy){
-        List<Posts> list = postsService.getAllPosts(pageNo, pageSize, sortBy);
+        Page<Posts> list = postsService.getAllPosts(pageNo, pageSize, sortBy);
 
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
@@ -72,10 +72,10 @@ public class PostsController{
 
     @GetMapping("/getallpostbyuserid/{id}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<Posts>> getallPostByUSERID( @RequestParam(defaultValue = "0") Integer pageNo,
+    public ResponseEntity<Page<Posts>> getallPostByUSERID( @RequestParam(defaultValue = "0") Integer pageNo,
                                                            @RequestParam(defaultValue = "10") Integer pageSize,
                                                            @RequestParam(defaultValue = "id") String sortBy,@PathVariable Long id){
-        List<Posts> list = postsService.getAllPostByUserId(pageNo, pageSize, sortBy, id);
+        Page<Posts> list = postsService.getAllPostByUserId(pageNo, pageSize, sortBy, id);
 
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }

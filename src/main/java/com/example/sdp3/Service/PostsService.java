@@ -32,17 +32,18 @@ public class PostsService{
         postsRepository.deleteById(id);
     }
 
-    public List<Posts> getAllPosts(Integer pageNo, Integer pageSize, String sortBy){
+    public Page<Posts> getAllPosts(Integer pageNo, Integer pageSize, String sortBy){
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
-        Page<Posts> pagedResult = postsRepository.findAll(paging);
+        return postsRepository.findAll(paging);
 
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Posts>();
-        }
+//        if(pagedResult.hasContent()) {
+////            return pagedResult.getContent();
+//            return pagedResult;
+//        } else {
+//            return new Page();
+//        }
     }
 
     public Posts findPostById(Long id){
@@ -50,16 +51,16 @@ public class PostsService{
                 .orElseThrow(() -> new IllegalStateException("Post was not found"));
     }
 
-    public List<Posts> getAllPostByUserId(Integer pageNo, Integer pageSize, String sortBy, Long userId) {
+    public Page<Posts> getAllPostByUserId(Integer pageNo, Integer pageSize, String sortBy, Long userId) {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
-        Page<Posts> pagedResult = postsRepository.findAllByUserId(userId,paging);
-        if(pagedResult.hasContent()) {
-           return pagedResult.getContent();
-        } else {
-            return new ArrayList<Posts>();
-        }
+        return postsRepository.findAllByUserId(userId,paging);
+        //        if(pagedResult.hasContent()) {
+//           return pagedResult.getContent();
+//        } else {
+//            return new ArrayList<Posts>();
+//        }
 
 
     }

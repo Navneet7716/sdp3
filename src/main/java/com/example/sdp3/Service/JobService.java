@@ -30,16 +30,16 @@ public class JobService{
         jobRepository.deleteById(id);
     }
 
-    public List<Jobs> getAllJobs(Integer pageNo, Integer pageSize, String sortBy) {
+    public Page<Jobs> getAllJobs(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
-        Page<Jobs> pagedResult = jobRepository.findAll(paging);
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Jobs>();
-        }
+        return jobRepository.findAll(paging);
+//
+//        if(pagedResult.hasContent()) {
+//            return pagedResult.getContent();
+//        } else {
+//            return new ArrayList<Jobs>();
+//        }
     }
 
         public Optional<Jobs> findJobById (Long id){
@@ -51,15 +51,15 @@ public class JobService{
             }
         }
 
-    public List<Jobs> findJobByUserId (Integer pageNo, Integer pageSize, String sortBy,Long id){
+    public Page<Jobs> findJobByUserId (Integer pageNo, Integer pageSize, String sortBy,Long id){
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
-        Page<Jobs> pagedResult = jobRepository.findAllByUserId(id,paging);
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Jobs>();
-        }
+        return jobRepository.findAllByUserId(id,paging);
+//        if(pagedResult.hasContent()) {
+//            return pagedResult.getContent();
+//        } else {
+//            return new ArrayList<Jobs>();
+//        }
     }
 
 

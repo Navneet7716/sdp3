@@ -5,6 +5,7 @@ import com.example.sdp3.Pojo.Jobs;
 import com.example.sdp3.Pojo.Posts;
 import com.example.sdp3.Service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +42,10 @@ public class JobsController{
 
     @GetMapping("/getalljobs")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<Jobs>> getAllJobs( @RequestParam(defaultValue = "0") Integer pageNo,
-                                                  @RequestParam(defaultValue = "10") Integer pageSize,
-                                                  @RequestParam(defaultValue = "id") String sortBy){
-        List<Jobs> list = jobService.getAllJobs(pageNo, pageSize, sortBy);
+    public ResponseEntity<Page<Jobs>> getAllJobs(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                 @RequestParam(defaultValue = "10") Integer pageSize,
+                                                 @RequestParam(defaultValue = "id") String sortBy){
+        Page<Jobs> list = jobService.getAllJobs(pageNo, pageSize, sortBy);
 
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
 
@@ -70,10 +71,10 @@ public class JobsController{
     }
 
     @GetMapping("/getjobsbyuserid/{id}")
-    public ResponseEntity<List<Jobs>> getjobsbyuserid(@RequestParam(defaultValue = "0") Integer pageNo,
+    public ResponseEntity<Page<Jobs>> getjobsbyuserid(@RequestParam(defaultValue = "0") Integer pageNo,
                                      @RequestParam(defaultValue = "10") Integer pageSize,
                                      @RequestParam(defaultValue = "id") String sortBy,@PathVariable Long id){
-        List<Jobs> list = jobService.findJobByUserId(pageNo, pageSize, sortBy, id);
+        Page<Jobs> list = jobService.findJobByUserId(pageNo, pageSize, sortBy, id);
 
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
 
