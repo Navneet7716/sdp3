@@ -17,18 +17,19 @@ import java.util.List;
         typeClass = ListArrayType.class
 )
 @Entity
-@Table(name = "posts_table")
+@Table
 public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial")
     private Long id;
 
-    @Column
+
+    @Column()
     @NotNull
     private Long userId;
 
-    @Column(name="post_image", nullable=true)
+    @Column(name="image", nullable=true)
     private String image;
 
     @Column
@@ -37,7 +38,7 @@ public class Posts {
 
     @Column
     @NotNull
-    private String post_type;
+    private String postType;
 
     @Column(nullable = true)
     private Long parentId;
@@ -62,22 +63,49 @@ public class Posts {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt = new Date();
 
-    @Column
-    private Long like_count;
+    @Column()
+    private Long likeCount = 0l;
 
-    public Posts(Long user_id, String image, String description, String post_type, Long parentId, String title, List<String> hashtags, Long like_count) {
+    @Transient
+    private boolean isLiked;
+
+    @Transient
+    private UserProfile userData;
+
+
+
+    public Posts(UserProfile userData,Long user_id,boolean isLiked, String image, String description, String post_type, Long parentId, String title, List<String> hashtags, Long like_count) {
+
         this.userId = user_id;
+        this.userData = userData;
         this.image = image;
         this.description = description;
-        this.post_type = post_type;
+        this.postType = post_type;
         this.parentId = parentId;
         this.title = title;
         this.hashtags = hashtags;
-        this.like_count = like_count;
+        this.likeCount = like_count;
+        this.isLiked = isLiked;
     }
 
     public Posts(){
 
+    }
+
+    public UserProfile getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserProfile userData) {
+        this.userData = userData;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     public Long getId() {
@@ -88,12 +116,13 @@ public class Posts {
         this.id = id;
     }
 
-    public Long getUser_id() {
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.userId = user_id;
+    public void setUserId(Long userData) {
+        this.userId = userData;
     }
 
     public String getImage() {
@@ -113,11 +142,11 @@ public class Posts {
     }
 
     public String getPost_type() {
-        return post_type;
+        return postType;
     }
 
     public void setPost_type(String post_type) {
-        this.post_type = post_type;
+        this.postType = post_type;
     }
 
     public Long getParentId() {
@@ -148,11 +177,20 @@ public class Posts {
         return createdAt;
     }
 
+
+
     @PreUpdate
     public void setUpdatedAt() {
         this.createdAt= new Date();
     }
 
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
     public Date getUpdated_at() {
         return updatedAt;
     }
@@ -162,10 +200,10 @@ public class Posts {
     }
 
     public Long getLike_count() {
-        return like_count;
+        return likeCount;
     }
 
     public void setLike_count(Long like_count) {
-        this.like_count = like_count;
+        this.likeCount = like_count;
     }
 }

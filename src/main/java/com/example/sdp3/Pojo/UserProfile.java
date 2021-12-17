@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "user_profile")
+@Table
 @TypeDef(
         name = "list-array",
         typeClass = ListArrayType.class
@@ -29,7 +29,7 @@ public class UserProfile {
 
     @Column
     @NotNull
-    private Long user_id;
+    private Long userId;
 
 
     @Column
@@ -77,7 +77,7 @@ public class UserProfile {
 
     }
     public UserProfile(Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image) {
-        this.user_id = user_id;
+        this.userId = user_id;
         this.bio = bio;
         this.github_link = github_link;
         this.linkedIn_link = linkedIn_link;
@@ -91,11 +91,11 @@ public class UserProfile {
     }
 
     public Long getUser_id() {
-        return user_id;
+        return userId;
     }
 
     public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+        this.userId = user_id;
     }
 
     public String getBio() {

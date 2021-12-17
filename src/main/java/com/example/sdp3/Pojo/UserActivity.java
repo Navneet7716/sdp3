@@ -16,18 +16,19 @@ public class UserActivity {
     private Long id;
 
     @Column(nullable = false)
-    private Long user_id;
+    private Long userId;
 
     @Column(nullable = false)
-    private Long post_id;
+    private Long postId;
 
     @Column(columnDefinition = "boolean default false")
-    private Boolean is_liked;
+    private Boolean isliked;
 
     @Column
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at = new Date();
+    private Date createdAt = new Date();
+
 
     public UserActivity() {
 
@@ -36,37 +37,20 @@ public class UserActivity {
 
     @PreUpdate
     public void setCreated_at() {
-        this.created_at= new Date();
+        this.createdAt= new Date();
     }
 
-    public Date getCreated_at() {return this.created_at;}
+    public Date getCreated_at() {return this.createdAt;}
 
-
-    @Override
-    public String toString() {
-        return "UserActivity{" +
-                "id=" + id +
-                ", user_id=" + user_id +
-                ", post_id=" + post_id +
-//                ", like=" + like +
-                ", created_at=" + created_at +
-                '}';
-    }
-
-    public UserActivity(Long id, Long user_id, Long post_id, boolean is_liked) {
+    public UserActivity(Long id, Long userId, Long postId, Boolean isliked, Date created_at) {
         this.id = id;
-        this.user_id = user_id;
-        this.post_id = post_id;
-        this.is_liked = is_liked;
+        this.userId = userId;
+        this.postId = postId;
+        this.isliked = isliked;
+        this.createdAt = created_at;
     }
 
-    public boolean getIs_liked() {
-        return is_liked;
-    }
 
-    public void setIs_liked(boolean is_liked) {
-        this.is_liked = is_liked;
-    }
 
     public Long getId() {
         return id;
@@ -76,21 +60,31 @@ public class UserActivity {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Long getPost_id() {
-        return post_id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setPost_id(Long post_id) {
-        this.post_id = post_id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
+    public Boolean getIsliked() {
+        return isliked;
+    }
 
+    public void setIsliked(Boolean isliked) {
+        this.isliked = isliked;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.createdAt = created_at;
+    }
 }

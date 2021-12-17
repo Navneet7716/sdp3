@@ -1,6 +1,7 @@
 package com.example.sdp3.Controller;
 
 import com.example.sdp3.Pojo.Posts;
+import com.example.sdp3.Security.services.UserDetailsImpl;
 import com.example.sdp3.Service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,7 +48,7 @@ public class PostsController{
     @GetMapping("/getallposts")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Page<Posts>> getPosts(  @RequestParam(defaultValue = "0") Integer pageNo,
-                                                  @RequestParam(defaultValue = "10") Integer pageSize,
+                                                  @RequestParam(defaultValue = "13") Integer pageSize,
                                                   @RequestParam(defaultValue = "id") String sortBy){
         Page<Posts> list = postsService.getAllPosts(pageNo, pageSize, sortBy);
 
@@ -111,6 +113,21 @@ public class PostsController{
             response.error = true;
         }
         return response;
+    }
+
+    @GetMapping("/lol")
+    @PreAuthorize("hasRole('USER')")
+    public String userData() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetailsImpl) {
+            return "USER ID" + ((UserDetailsImpl)principal).getId();
+        } else {
+        return  "USER" + 1l;
+        }
+
+
+
     }
 
 }
