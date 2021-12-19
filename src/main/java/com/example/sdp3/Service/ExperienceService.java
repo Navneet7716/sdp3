@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ExperienceService {
@@ -40,11 +39,11 @@ public class ExperienceService {
     public Experience updateExperience(Experience UpdatedExperience) {
         Experience experience = experienceRepository.findById(UpdatedExperience.getId()).orElseThrow(() -> new IllegalStateException("Experience Not found"));
 
-        if (UpdatedExperience.getTitle().length() > 0 && UpdatedExperience.getLocation().length() > 0) {
+        if (UpdatedExperience.getTitle().length() > 0 && UpdatedExperience.getLocation().length() > 0 && UpdatedExperience.getDescription().length() > 0) {
             experience.setTitle(UpdatedExperience.getTitle());
             experience.setDuration(UpdatedExperience.getDuration());
             experience.setLocation(UpdatedExperience.getLocation());
-
+            experience.setDescription(UpdatedExperience.getDescription());
         }
 
         return experience;

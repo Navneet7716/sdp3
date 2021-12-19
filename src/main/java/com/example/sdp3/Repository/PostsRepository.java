@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostsRepository extends PagingAndSortingRepository<Posts, Long> {
-    Page<Posts> findAllByUserId(Long id, Pageable pageable);
+    Page<Posts> findAllByUserIdAndPostType(Long id,String type ,Pageable pageable);
 
     Page<Posts> findAllByPostType(String posttype, Pageable pageable);
 

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
 import org.springframework.security.core.Authentication;
 
 
 @Service
-public class PostsService{
+public class PostsService {
 
     @Autowired
     PostsRepository postsRepository;
@@ -38,7 +40,7 @@ public class PostsService{
     @Autowired
     UserActivityRepository userActivityRepository;
 
-    public Posts addPosts(Posts posts){
+    public Posts addPosts(Posts posts) {
 
         Posts newpost = postsRepository.save(posts);
 
@@ -47,42 +49,18 @@ public class PostsService{
         return newpost;
     }
 
-    public void deletePostsById(Long id){
+    public void deletePostsById(Long id) {
         postsRepository.deleteById(id);
     }
 
-    public Page<Posts> getAllPosts(Integer pageNo, Integer pageSize, String sortBy){
+    public Page<Posts> getAllPosts(Integer pageNo, Integer pageSize, String sortBy) {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
-        Page<Posts> pagedResults = postsRepository.findAllByPostType("parent",paging);
+        Page<Posts> pagedResults = postsRepository.findAllByPostType("parent", paging);
 
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Long userid = ((UserDetailsImpl)principal).getId();
-
-
-        pagedResults.getContent().forEach((el) -> {
-
-        el.setUserData(userProfileRepository.findAllByUserId(el.getUserId()));
-
-
-        Optional<UserActivity> userActivity = userActivityRepository.findAllByUserIdAndPostId(userid, el.getId());
-
-        if (userActivity.isPresent()) {
-        userActivity.ifPresent((el1) -> el.setLiked(el1.getIsliked()));
-        }
-
-
-
-
-
-
-
-        });
-
-        return pagedResults;
+        return getPosts(pagedResults);
 
 //        if(pagedResult.hasContent()) {
 ////            return pagedResult.getContent();
@@ -92,7 +70,7 @@ public class PostsService{
 //        }
     }
 
-    public Optional<Posts> findPostById(Long id){
+    public Optional<Posts> findPostById(Long id) {
         Optional<Posts> p = postsRepository.findById(id);
 
         p.ifPresent((e) -> {
@@ -100,7 +78,7 @@ public class PostsService{
 
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            Long userid = ((UserDetailsImpl)principal).getId();
+            Long userid = ((UserDetailsImpl) principal).getId();
 
 
             Optional<UserActivity> userActivity = userActivityRepository.findAllByUserIdAndPostId(userid, e.getId());
@@ -121,14 +99,34 @@ public class PostsService{
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
 
-        return postsRepository.findAllByUserId(userId,paging);
-        //        if(pagedResult.hasContent()) {
-//           return pagedResult.getContent();
-//        } else {
-//            return new ArrayList<Posts>();
-//        }
+        Page<Posts> pagedResults = postsRepository.findAllByUserIdAndPostType(userId, "parent", paging);
+
+        return getPosts(pagedResults);
 
 
+    }
+
+    public Page<Posts> getPosts(Page<Posts> pagedResults) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Long userid = ((UserDetailsImpl) principal).getId();
+
+
+        pagedResults.getContent().forEach((el) -> {
+
+            el.setUserData(userProfileRepository.findAllByUserId(el.getUserId()));
+
+
+            Optional<UserActivity> userActivity = userActivityRepository.findAllByUserIdAndPostId(userid, el.getId());
+
+            if (userActivity.isPresent()) {
+                userActivity.ifPresent((el1) -> el.setLiked(el1.getIsliked()));
+            }
+
+
+        });
+
+        return pagedResults;
     }
 
     public List<Posts> getAllCommentsBYPOSTID(Long parentId) {
@@ -145,13 +143,12 @@ public class PostsService{
     }
 
     @Transactional
-    public Posts updatePost(Posts updatePost){
+    public Posts updatePost(Posts updatePost) {
         Optional<Posts> posts = postsRepository.findById(updatePost.getId());
 
-        if(posts.isPresent()){
-          return postsRepository.save(updatePost);
-        }
-        else{
+        if (posts.isPresent()) {
+            return postsRepository.save(updatePost);
+        } else {
             throw new IllegalStateException("Post is not found");
         }
 
