@@ -31,6 +31,9 @@ public class UserProfile {
     @NotNull
     private Long userId;
 
+    @Column()
+    private String fullname;
+
 
     @Column
     @Size(max = 250)
@@ -76,14 +79,23 @@ public class UserProfile {
     public UserProfile(){
 
     }
-    public UserProfile(Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image) {
+    public UserProfile(String fullname,Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image) {
         this.userId = user_id;
+        this.fullname = fullname;
         this.bio = bio;
         this.github_link = github_link;
         this.linkedIn_link = linkedIn_link;
         this.languages = languages;
         this.skills = skills;
         this.profile_image = profile_image;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public Long getId() {

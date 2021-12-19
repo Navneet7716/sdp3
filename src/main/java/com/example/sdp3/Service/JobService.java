@@ -22,8 +22,8 @@ public class JobService{
     @Autowired
     JobRepository jobRepository;
 
-    public void addJob(Jobs newJob){
-        jobRepository.save(newJob);
+    public Jobs addJob(Jobs newJob){
+        return jobRepository.save(newJob);
     }
 
     public void deleteJobById(Long id){
@@ -64,11 +64,11 @@ public class JobService{
 
 
     @Transactional
-        public void updateJobs(Jobs updateJob){
+        public Jobs updateJobs(Jobs updateJob){
             Optional<Jobs> job = jobRepository.findById(updateJob.getId());
 
             if(job.isPresent()){
-                jobRepository.save(updateJob);
+                return jobRepository.save(updateJob);
             }
             else{
                 throw new IllegalStateException("Job not found");

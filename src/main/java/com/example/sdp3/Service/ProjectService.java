@@ -57,13 +57,13 @@ public class ProjectService {
 
     // update by id
     @Transactional
-    public void update(Projects projects) {
+    public Projects update(Projects projects) {
 
         Projects projects1 = projectsRepository.findById(projects.getId()).orElseThrow(() -> new IllegalStateException("Project doesn't exist"));
 
         if (projects.getName().length() > 0 && Objects.equals(projects.getName(), projects1.getName()) && projects.getDescription().length() > 0) {
 
-            projectsRepository.save(projects);
+           return projectsRepository.save(projects);
 
         }
         else {
@@ -74,10 +74,10 @@ public class ProjectService {
 
     // create
 
-    public void create(Projects projects) {
+    public Projects create(Projects projects) {
         try {
 
-            projectsRepository.save(projects);
+            return projectsRepository.save(projects);
 
         }
         catch (Exception e) {

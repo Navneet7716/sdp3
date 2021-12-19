@@ -51,7 +51,7 @@ public class ProjectController {
     public ResponseEntity<ProjectResponse> createProject(@RequestBody Projects projects) {
         ProjectResponse projectResponse = new ProjectResponse();
         try {
-            projectService.create(projects);
+           projectResponse.Data = projectService.create(projects);
             projectResponse.message = "success";
             projectResponse.error = false;
             return ResponseEntity.status(201).body(projectResponse);
@@ -125,7 +125,7 @@ public class ProjectController {
         ProjectResponse projectResponse = new ProjectResponse();
 
         try {
-            projectService.update(projects);
+           projectResponse.Data = projectService.update(projects);
 
             projectResponse.error = false;
             projectResponse.message = "Updated Successfully";

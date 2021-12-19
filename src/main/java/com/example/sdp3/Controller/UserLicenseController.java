@@ -51,8 +51,8 @@ public class UserLicenseController {
     {
         try{
 
-            userLicenseService.createUserLicense(id,userLicense);
-            return new UserLicenseResponse("Uploaded Successfully" , true , null);
+           UserLicense userLicense1 = userLicenseService.createUserLicense(id,userLicense);
+            return new UserLicenseResponse("Uploaded Successfully" , true , List.of(userLicense1));
         }
         catch(Exception e)
         {
@@ -89,8 +89,8 @@ public class UserLicenseController {
 
         try
         {
-            userLicenseService.updateUserLicense(userLicense);
-            return new UserLicenseResponse("License Updated Successfully" , true, null);
+
+            return new UserLicenseResponse("License Updated Successfully" , true,  List.of(userLicenseService.updateUserLicense(userLicense)));
         }
         catch(Exception e)
         {

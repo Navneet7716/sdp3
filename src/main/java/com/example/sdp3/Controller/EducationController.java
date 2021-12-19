@@ -70,7 +70,7 @@ public class EducationController {
     public ResponseEntity<EducationResponse> createEducation(@RequestBody Education education) {
         EducationResponse educationResponse = new EducationResponse();
         try {
-            educationService.create(education);
+            educationResponse.Data = educationService.create(education);
             educationResponse.message = "success";
             educationResponse.error = false;
             return ResponseEntity.status(201).body(educationResponse);
@@ -115,7 +115,7 @@ public class EducationController {
         EducationResponse educationResponse = new EducationResponse();
 
         try {
-            educationService.update(education);
+           educationResponse.Data = educationService.update(education);
 
             educationResponse.error = false;
             educationResponse.message = "Updates Successfully";

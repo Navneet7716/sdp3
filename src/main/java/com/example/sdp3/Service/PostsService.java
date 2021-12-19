@@ -38,8 +38,13 @@ public class PostsService{
     @Autowired
     UserActivityRepository userActivityRepository;
 
-    public void addPosts(Posts posts){
-        postsRepository.save(posts);
+    public Posts addPosts(Posts posts){
+
+        Posts newpost = postsRepository.save(posts);
+
+        newpost.setUserData(userProfileRepository.findAllByUserId(newpost.getUserId()));
+
+        return newpost;
     }
 
     public void deletePostsById(Long id){
@@ -87,9 +92,28 @@ public class PostsService{
 //        }
     }
 
-    public Posts findPostById(Long id){
-        return postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Post was not found"));
+    public Optional<Posts> findPostById(Long id){
+        Optional<Posts> p = postsRepository.findById(id);
+
+        p.ifPresent((e) -> {
+            e.setUserData(userProfileRepository.findAllByUserId(e.getUserId()));
+
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            Long userid = ((UserDetailsImpl)principal).getId();
+
+
+            Optional<UserActivity> userActivity = userActivityRepository.findAllByUserIdAndPostId(userid, e.getId());
+
+            if (userActivity.isPresent()) {
+                userActivity.ifPresent((el1) -> e.setLiked(el1.getIsliked()));
+            }
+
+
+        });
+
+        return p;
+
     }
 
     public Page<Posts> getAllPostByUserId(Integer pageNo, Integer pageSize, String sortBy, Long userId) {
@@ -107,12 +131,25 @@ public class PostsService{
 
     }
 
+    public List<Posts> getAllCommentsBYPOSTID(Long parentId) {
+
+        List<Posts> posts = postsRepository.findAllByPostTypeAndParentId("comment", parentId);
+
+        posts.forEach(el -> {
+            el.setUserData(userProfileRepository.findAllByUserId(el.getUserId()));
+        });
+
+        return posts;
+
+
+    }
+
     @Transactional
-    public void updatePost(Posts updatePost){
+    public Posts updatePost(Posts updatePost){
         Optional<Posts> posts = postsRepository.findById(updatePost.getId());
 
         if(posts.isPresent()){
-            postsRepository.save(updatePost);
+          return postsRepository.save(updatePost);
         }
         else{
             throw new IllegalStateException("Post is not found");

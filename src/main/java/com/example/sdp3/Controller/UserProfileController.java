@@ -62,8 +62,8 @@ public class UserProfileController {
 
         try
         {
-            userProfileService.updateUserProfile(userProfile);
-            return new UserProfileResponse("Profile Updated Successfully" , true, null);
+
+            return new UserProfileResponse("Profile Updated Successfully" , true, List.of(userProfileService.updateUserProfile(userProfile)));
         }
         catch(Exception e)
         {

@@ -25,6 +25,10 @@ public class Experience {
     private String location;
 
     @Column()
+    private String description;
+
+
+    @Column()
     private Long user_id;
 
     @Column
@@ -48,12 +52,13 @@ public class Experience {
         return id;
     }
 
-    public Experience(Long id, String title, String duration, String location, Long user_id) {
+    public Experience(String description,Long id, String title, String duration, String location, Long user_id) {
         this.id = id;
         this.title = title;
         this.duration = duration;
         this.location = location;
         this.user_id = user_id;
+        this.description = description;
     }
 
     @Override
@@ -63,12 +68,22 @@ public class Experience {
                 ", title='" + title + '\'' +
                 ", duration='" + duration + '\'' +
                 ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
                 ", user_id=" + user_id +
+                ", created_at=" + created_at +
                 '}';
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTitle() {

@@ -52,13 +52,13 @@ public class EducationService {
 
     // update by id
     @Transactional
-    public void update(Education education) {
+    public Education update(Education education) {
 
         Education education1 = educationRepository.findById(education.getId()).orElseThrow(() -> new IllegalStateException("Education doesn't exist"));
 
         if (education.getInstitution_name().length() > 0 && Objects.equals(education.getInstitution_name(), education1.getInstitution_name()) && education.getLocation().length() > 0) {
 
-            educationRepository.save(education);
+            return educationRepository.save(education);
 
         }
         else {
@@ -73,10 +73,10 @@ public class EducationService {
 
 
 
-    public void create(Education education) {
+    public Education create(Education education) {
         try {
 
-            educationRepository.save(education);
+           return educationRepository.save(education);
 
         }
         catch (Exception e) {

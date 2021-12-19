@@ -132,9 +132,9 @@ public class AuthController {
         }
 
         user.setRoles(roles);
-        userRepository.save(user);
+        User user1 = userRepository.save(user);
         List<User> data = new ArrayList<>();
-        UserProfile userProfile = new UserProfile(user.getId(),null,null,null,null,null,null);
+        UserProfile userProfile = new UserProfile(user1.getFirst_name()+" " + user1.getLast_name(),user.getId(),null,null,null,null,null,null);
         userProfileRepository.save(userProfile);
         data.add(user);
 

@@ -32,18 +32,11 @@ public class UserProfileService {
 
 
     @Transactional
-    public void updateUserProfile(UserProfile userProfile)
+    public UserProfile updateUserProfile(UserProfile userProfile)
     {
 
-        try
-        {
             userProfile.setUser_id(userProfile.getId());
-            userProfileRepository.save(userProfile);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error Occured while updating the User Profile");
-        }
+            return userProfileRepository.save(userProfile);
 
     }
 

@@ -25,8 +25,8 @@ public class ExperienceService {
 
     }
 
-    public void CreateExperience(Experience experience) {
-        experienceRepository.save(experience);
+    public Experience CreateExperience(Experience experience) {
+        return experienceRepository.save(experience);
     }
 
     public List<Experience> getExperienceByUser_id(Long id)  {
@@ -37,15 +37,17 @@ public class ExperienceService {
     }
 
     @Transactional
-    public void updateExperience(Experience UpdatedExperience) {
+    public Experience updateExperience(Experience UpdatedExperience) {
         Experience experience = experienceRepository.findById(UpdatedExperience.getId()).orElseThrow(() -> new IllegalStateException("Experience Not found"));
 
-        if (UpdatedExperience.getTitle().length() > 0 && !Objects.equals(UpdatedExperience.getTitle(), experience.getTitle()) && UpdatedExperience.getLocation().length() > 0) {
+        if (UpdatedExperience.getTitle().length() > 0 && UpdatedExperience.getLocation().length() > 0) {
             experience.setTitle(UpdatedExperience.getTitle());
             experience.setDuration(UpdatedExperience.getDuration());
             experience.setLocation(UpdatedExperience.getLocation());
 
         }
+
+        return experience;
 
     }
 

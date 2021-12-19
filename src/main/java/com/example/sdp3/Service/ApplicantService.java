@@ -15,14 +15,14 @@ public class ApplicantService {
     @Autowired
     ApplicantRepository applicantRepository;
 
-    public void addApplicant(Applicant newapplicant){
+    public Applicant addApplicant(Applicant newapplicant){
 
 //       Optional<Applicant> applicant = applicantRepository.findById(newapplicant.getId());
 //
 //        if (applicant.isPresent()) {
 //            throw new IllegalStateException("Applicant Already Present");
 //        }
-        applicantRepository.save(newapplicant);
+       return applicantRepository.save(newapplicant);
     }
 
     public void deleteApplicantById(Long id){
@@ -56,15 +56,16 @@ public class ApplicantService {
     }
 
     @Transactional
-    public void updateApplicant(Applicant updateapplicant){
+    public Applicant updateApplicant(Applicant updateapplicant){
         Optional<Applicant> applicant = applicantRepository.findById(updateapplicant.getId());
 
         if(applicant.isPresent()){
-            applicantRepository.save(updateapplicant);
+           return applicantRepository.save(updateapplicant);
         }
         else{
             throw new IllegalStateException("Applicant not found");
         }
+
 
     }
 }

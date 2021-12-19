@@ -21,17 +21,13 @@ public class UserLicenseService {
         return userLicenseRepository.findUserLicenseByUser_id(id).orElseThrow(() -> new IllegalStateException("No License found"));
     }
 
-    public void createUserLicense(Long id , UserLicense userLicense)
+    public UserLicense createUserLicense(Long id , UserLicense userLicense)
     {
-        try
-        {
+
             userLicense.setUser_id(id);
-            userLicenseRepository.save(userLicense);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
+            UserLicense userLicense1 = userLicenseRepository.save(userLicense);
+            return userLicense1;
+
     }
 
     public void deleteUserLicense(Long id)
@@ -51,14 +47,16 @@ public class UserLicenseService {
 
 
     @Transactional
-    public void updateUserLicense(UserLicense userLicense)
+    public UserLicense updateUserLicense(UserLicense userLicense)
     {
        UserLicense userLicense1 = userLicenseRepository.findById(userLicense.getId()).orElseThrow(() -> new IllegalStateException("License Not Found!"));
 
         if (userLicense.getLicense_name().length() > 0 && !Objects.equals(userLicense1.getLicense_name(), userLicense.getLicense_name()) ) {
-            userLicenseRepository.save(userLicense);
+            userLicense1 = userLicenseRepository.save(userLicense);
 
         }
+
+        return userLicense1;
 
 
     }

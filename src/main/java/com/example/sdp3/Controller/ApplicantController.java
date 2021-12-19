@@ -27,7 +27,7 @@ public class ApplicantController{
         Applicantreturn response = new Applicantreturn();
 
         try{
-            applicantService.addApplicant(applicant);
+            response.data = applicantService.addApplicant(applicant);
             response.message = "Added Successfully";
             response.error = false;
         }
@@ -147,7 +147,7 @@ public class ApplicantController{
     public Applicantreturn updateApplicant(@RequestBody Applicant updatedapplicant){
         Applicantreturn response = new Applicantreturn();
         try{
-            applicantService.updateApplicant(updatedapplicant);
+            response.data = applicantService.updateApplicant(updatedapplicant);
             response.message = "Successfully updated "+ updatedapplicant.getId();
             response.error = false;
         }

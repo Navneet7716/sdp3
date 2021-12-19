@@ -77,11 +77,11 @@ public class ExperienceController {
         ExperienceResponse experienceResponse = new ExperienceResponse();
         try {
 
-            experienceService.updateExperience(experience);
+            Experience experience1 = experienceService.updateExperience(experience);
 
             experienceResponse.error=false;
             experienceResponse.message="Updated Successfully";
-            experienceResponse.data = null;
+            experienceResponse.data = experience1;
 
             return ResponseEntity.status(201).body(experienceResponse);
         }
@@ -99,10 +99,10 @@ public class ExperienceController {
     public ResponseEntity<ExperienceResponse> addExperience(@RequestBody Experience experience) {
         ExperienceResponse experienceResponse = new ExperienceResponse();
         try {
-            experienceService.CreateExperience(experience);
+            Experience experience1 = experienceService.CreateExperience(experience);
             experienceResponse.error=false;
             experienceResponse.message="Created Successfully";
-            experienceResponse.data = null;
+            experienceResponse.data = experience1;
 
             return ResponseEntity.status(201).body(experienceResponse);
         }catch (Exception e) {

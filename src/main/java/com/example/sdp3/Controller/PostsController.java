@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(value = "*",maxAge = 3600)
@@ -32,7 +33,7 @@ public class PostsController{
          Postreturn response = new Postreturn();
 
         try{
-            postsService.addPosts(posts);
+           response.data = postsService.addPosts(posts);
 
             response.message = "Added Successfully";
             response.error = false;
@@ -48,7 +49,7 @@ public class PostsController{
     @GetMapping("/getallposts")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Page<Posts>> getPosts(  @RequestParam(defaultValue = "0") Integer pageNo,
-                                                  @RequestParam(defaultValue = "13") Integer pageSize,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize,
                                                   @RequestParam(defaultValue = "id") String sortBy){
         Page<Posts> list = postsService.getAllPosts(pageNo, pageSize, sortBy);
 
@@ -60,7 +61,7 @@ public class PostsController{
     public Postreturn getPostById(@PathVariable Long id){
         Postreturn response = new Postreturn();
         try{
-            response.data = postsService.findPostById(id);
+            response.data = postsService.findPostById(id).get();
             response.message = "Found the Post";
             response.error = false;
         }
@@ -104,7 +105,7 @@ public class PostsController{
     public Postreturn updateApplicant(@RequestBody Posts updatedpost){
         Postreturn response = new Postreturn();
         try{
-            postsService.updatePost(updatedpost);
+           response.data = postsService.updatePost(updatedpost);
             response.message = "Successfully updated "+ updatedpost.getId();
             response.error = false;
         }
@@ -114,6 +115,23 @@ public class PostsController{
         }
         return response;
     }
+
+    @GetMapping("/getCommentByParentId/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<Posts>> getallcommentsbyparentid(@PathVariable Long id) {
+
+        try {
+
+        return new ResponseEntity<>(postsService.getAllCommentsBYPOSTID(id),new HttpHeaders(), HttpStatus.OK);
+
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(new ArrayList<Posts>(), new HttpHeaders(), HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+
 
     @GetMapping("/lol")
     @PreAuthorize("hasRole('USER')")

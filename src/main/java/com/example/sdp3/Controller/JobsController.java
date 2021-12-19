@@ -28,7 +28,7 @@ public class JobsController{
     public Jobreturn addJobPost(@RequestBody Jobs job) {
         Jobreturn response = new Jobreturn();
         try {
-            jobService.addJob(job);
+            response.data = Optional.ofNullable(jobService.addJob(job));
             response.message = "Added Successfully";
             response.error = false;
         }
@@ -103,7 +103,7 @@ public class JobsController{
     public Jobreturn updateJob(@RequestBody Jobs job){
         Jobreturn response = new Jobreturn();
         try{
-            jobService.updateJobs(job);
+            response.data = Optional.ofNullable(jobService.updateJobs(job));
             response.message="Job Updated "+job.getId();
             response.error=false;
         }

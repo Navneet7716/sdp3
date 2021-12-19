@@ -16,4 +16,6 @@ public interface PostsRepository extends PagingAndSortingRepository<Posts, Long>
     Page<Posts> findAllByUserId(Long id, Pageable pageable);
 
     Page<Posts> findAllByPostType(String posttype, Pageable pageable);
+
+    List<Posts> findAllByPostTypeAndParentId(String postType, Long parentId);
 }
