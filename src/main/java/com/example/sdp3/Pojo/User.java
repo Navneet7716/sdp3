@@ -71,8 +71,7 @@ public class User {
     @Size(max = 120)
     private String address;
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 

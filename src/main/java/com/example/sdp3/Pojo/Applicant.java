@@ -26,7 +26,7 @@ public class Applicant {
     @NotNull
     private String status;
 
-    @Column
+    @Column(updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();

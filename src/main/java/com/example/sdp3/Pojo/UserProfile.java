@@ -66,15 +66,10 @@ public class UserProfile {
     private String profile_image;
 
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
-    @PreUpdate
-    public void setUpdatedAt() {
-        this.created_at= new Date();
-    }
 
     public UserProfile(){
 

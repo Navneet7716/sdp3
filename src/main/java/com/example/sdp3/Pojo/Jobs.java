@@ -51,8 +51,7 @@ public class Jobs {
     private Long userId;
 
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 

@@ -22,7 +22,7 @@ public class Follow {
     @Column(nullable = false)
     private Long target_userid;
 
-    @Column
+    @Column(updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();

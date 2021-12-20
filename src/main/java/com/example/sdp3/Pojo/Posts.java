@@ -53,13 +53,11 @@ public class Posts {
     )
     private List<String> hashtags;
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt = new Date();
 
     @Column
-    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt = new Date();
 
@@ -178,11 +176,11 @@ public class Posts {
     }
 
 
-
-    @PreUpdate
-    public void setUpdatedAt() {
-        this.createdAt= new Date();
-    }
+//
+//    @PreUpdate
+//    public void setCreatedAt() {
+//        this.createdAt= new Date();
+//    }
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;

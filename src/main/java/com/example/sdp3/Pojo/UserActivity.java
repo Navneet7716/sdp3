@@ -24,8 +24,7 @@ public class UserActivity {
     @Column(columnDefinition = "boolean default false")
     private Boolean isliked;
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt = new Date();
 

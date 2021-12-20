@@ -40,15 +40,10 @@ public class UserLicense {
     @Column
     private String pdf_link;
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
-    @PreUpdate
-    public void setUpdatedAt() {
-        this.created_at= new Date();
-    }
 
     public UserLicense()
     {

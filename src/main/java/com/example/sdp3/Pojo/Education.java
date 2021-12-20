@@ -30,8 +30,7 @@ public class Education {
     @Column()
     private Long user_id;
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
@@ -45,11 +44,6 @@ public class Education {
     }
 
     public Education() {
-    }
-
-    @PreUpdate
-    public void setCreated_at() {
-        this.created_at= new Date();
     }
 
     public Date getCreated_at() {

@@ -73,6 +73,7 @@ public class UserActivityService {
             Long count = (long) userActivityRepository.getLikeCount(e.getId()).size();
 
             e.setLike_count(count);
+            e.setCreatedAt(e.getCreated_at());
 
             postsRepository.save(e);
 

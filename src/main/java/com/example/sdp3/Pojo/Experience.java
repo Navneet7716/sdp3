@@ -31,8 +31,7 @@ public class Experience {
     @Column()
     private Long user_id;
 
-    @Column
-    @CreatedDate
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
