@@ -28,6 +28,9 @@ public class Projects {
     @Column()
     private Long user_id;
 
+    @Column()
+    private String duration;
+
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
@@ -40,12 +43,13 @@ public class Projects {
     public Date getCreated_at() {return this.created_at;}
 
 
-    public Projects(Long id, String name, String git_link, String description, Long user_id) {
+    public Projects(Long id, String name, String git_link, String description, Long user_id, String duration) {
         this.id = id;
         this.name = name;
         this.git_link = git_link;
         this.description = description;
         this.user_id = user_id;
+        this.duration = duration;
     }
 
     public Long getId() {
@@ -63,7 +67,17 @@ public class Projects {
                 ", git_link='" + git_link + '\'' +
                 ", description='" + description + '\'' +
                 ", user_id=" + user_id +
+                ", duration='" + duration + '\'' +
+                ", created_at=" + created_at +
                 '}';
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public void setId(Long id) {
