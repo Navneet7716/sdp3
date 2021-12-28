@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class EducationService {
@@ -56,7 +55,7 @@ public class EducationService {
 
         Education education1 = educationRepository.findById(education.getId()).orElseThrow(() -> new IllegalStateException("Education doesn't exist"));
 
-        if (education.getInstitution_name().length() > 0 && Objects.equals(education.getInstitution_name(), education1.getInstitution_name()) && education.getLocation().length() > 0) {
+        if (education.getInstitution_name().length() > 0  && education.getLocation().length() > 0) {
 
             return educationRepository.save(education);
 
