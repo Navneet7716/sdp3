@@ -1,9 +1,11 @@
 package com.example.sdp3.Service;
 
 
+import com.example.sdp3.Pojo.Follow;
 import com.example.sdp3.Pojo.Posts;
 import com.example.sdp3.Pojo.User;
 import com.example.sdp3.Pojo.UserActivity;
+import com.example.sdp3.Repository.FollowRepository;
 import com.example.sdp3.Repository.PostsRepository;
 import com.example.sdp3.Repository.UserActivityRepository;
 import com.example.sdp3.Repository.UserProfileRepository;
@@ -39,6 +41,9 @@ public class PostsService {
 
     @Autowired
     UserActivityRepository userActivityRepository;
+
+    @Autowired
+    FollowRepository followRepository;
 
     public Posts addPosts(Posts posts) {
 
@@ -105,6 +110,21 @@ public class PostsService {
 
 
     }
+
+    public Page<Posts> getAllPostBasedOnFollowers(Integer pageNo, Integer pageSize, String sortBy, Long userId) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+
+        List<Follow> follows = followRepository.getFollow(userId).get();
+
+        ArrayList<Long> followIds = new ArrayList<>();
+
+        follows.forEach(e -> followIds.add(e.getTarget_userid()) );
+
+        Page<Posts> pagedResults = postsRepository.findAllByPostTypeAndUserIdIn("parent", followIds, paging);
+
+        return getPosts(pagedResults);
+    }
+
 
     public Page<Posts> getPosts(Page<Posts> pagedResults) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

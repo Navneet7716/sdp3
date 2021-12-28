@@ -56,6 +56,20 @@ public class PostsController{
         return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping("/getallpostbyfollow")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Page<Posts>> getPostByfollow(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                       @RequestParam(defaultValue = "10") Integer pageSize,
+                                                       @RequestParam(defaultValue = "createdAt") String sortBy) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Long userid = ((UserDetailsImpl) principal).getId();
+
+        Page<Posts> list = postsService.getAllPostBasedOnFollowers(pageNo, pageSize, sortBy, userid);
+
+        return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+    }
+
     @GetMapping("/getpostbyid/{id}")
     @PreAuthorize("hasRole('USER')")
     public Postreturn getPostById(@PathVariable Long id){
