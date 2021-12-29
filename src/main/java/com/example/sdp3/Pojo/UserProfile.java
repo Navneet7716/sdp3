@@ -45,6 +45,10 @@ public class UserProfile {
 
     @Column
     @Size(max = 100)
+    private String resumeLink;
+
+    @Column
+    @Size(max = 100)
     private String linkedIn_link;
 
 
@@ -74,7 +78,7 @@ public class UserProfile {
     public UserProfile(){
 
     }
-    public UserProfile(String fullname,Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image) {
+    public UserProfile(String fullname,Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image, String resumeLink) {
         this.userId = user_id;
         this.fullname = fullname;
         this.bio = bio;
@@ -83,6 +87,7 @@ public class UserProfile {
         this.languages = languages;
         this.skills = skills;
         this.profile_image = profile_image;
+        this.resumeLink = resumeLink;
     }
 
     public String getFullname() {
@@ -107,6 +112,14 @@ public class UserProfile {
 
     public String getBio() {
         return bio;
+    }
+
+    public String getResumeLink() {
+        return resumeLink;
+    }
+
+    public void setResumeLink(String resumeLink) {
+        this.resumeLink = resumeLink;
     }
 
     public void setBio(String bio) {

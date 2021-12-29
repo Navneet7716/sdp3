@@ -30,12 +30,7 @@ public class UserLicense {
     private String license_name;
 
     @Column
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date received_date;
-
-    @Column
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date expiration_date;
+    private String duration;
 
     @Column
     private String pdf_link;
@@ -50,11 +45,10 @@ public class UserLicense {
 
     }
 
-    public UserLicense(String license_name ,Date received_date , Date expiration_date , String pdf_link )
+    public UserLicense(String license_name ,String duration , String pdf_link )
     {
         this.license_name = license_name;
-        this.received_date = received_date;
-        this.expiration_date = expiration_date;
+        this.duration= duration;
         this.pdf_link = pdf_link;
     }
 
@@ -82,20 +76,12 @@ public class UserLicense {
         this.license_name = license_name;
     }
 
-    public Date getReceived_date() {
-        return received_date;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setReceived_date(Date received_date) {
-        this.received_date = received_date;
-    }
-
-    public Date getExpiration_date() {
-        return expiration_date;
-    }
-
-    public void setExpiration_date(Date expiration_date) {
-        this.expiration_date = expiration_date;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public String getPdf_link() {
