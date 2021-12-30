@@ -61,7 +61,7 @@ public class ProjectService {
 
         Projects projects1 = projectsRepository.findById(projects.getId()).orElseThrow(() -> new IllegalStateException("Project doesn't exist"));
 
-        if (projects.getName().length() > 0 && Objects.equals(projects.getName(), projects1.getName()) && projects.getDescription().length() > 0) {
+        if (projects.getName().length() > 0 && projects.getDescription().length() > 0) {
 
            return projectsRepository.save(projects);
 
