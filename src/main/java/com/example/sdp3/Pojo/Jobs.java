@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -35,7 +36,7 @@ public class Jobs {
     @NotNull
     private String workplace;
 
-    @Column(name="job_description")
+    @Column(name="job_description", columnDefinition = "VARCHAR(1000)")
     @NotNull
     private String job_description;
 

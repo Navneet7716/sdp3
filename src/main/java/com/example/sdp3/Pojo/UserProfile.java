@@ -23,8 +23,7 @@ public class UserProfile {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
+    @Column()
     private Long id;
 
     @Column
@@ -78,7 +77,8 @@ public class UserProfile {
     public UserProfile(){
 
     }
-    public UserProfile(String fullname,Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image, String resumeLink) {
+    public UserProfile(Long id,String fullname,Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image, String resumeLink) {
+        this.id = id;
         this.userId = user_id;
         this.fullname = fullname;
         this.bio = bio;
