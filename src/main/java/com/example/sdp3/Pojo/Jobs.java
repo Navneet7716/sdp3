@@ -56,8 +56,18 @@ public class Jobs {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
+    @Transient
+    private boolean isApplied;
 
-    public Jobs(String job_title, String company, String workplace, String job_description, String job_location, String employment_type, Long user_id) {
+    @Transient
+    private UserProfile userData;
+
+    @Transient
+    private boolean status;
+
+
+
+    public Jobs(String job_title, String company, boolean isApplied, boolean status,UserProfile userData, String workplace, String job_description, String job_location, String employment_type, Long user_id) {
         this.job_title = job_title;
         this.company = company;
         this.workplace = workplace;
@@ -65,13 +75,32 @@ public class Jobs {
         this.job_location = job_location;
         this.employment_type = employment_type;
         this.userId = user_id;
+        this.isApplied = isApplied;
+        this.userData = userData;
+        this.status = status;
     }
 
     //No args constructor
     public Jobs() {
 
     }
-    @PreUpdate
+
+    public boolean isApplied() {
+        return isApplied;
+    }
+
+    public void setApplied(boolean applied) {
+        isApplied = applied;
+    }
+
+    public UserProfile getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserProfile userData) {
+        this.userData = userData;
+    }
+
     public void setCreated_at() {
         this.created_at= new Date();
     }

@@ -68,6 +68,9 @@ public class UserProfile {
     @Size(max = 1000)
     private String profile_image;
 
+    @Transient
+    private boolean isFollowing;
+
 
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -77,7 +80,7 @@ public class UserProfile {
     public UserProfile(){
 
     }
-    public UserProfile(Long id,String fullname,Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image, String resumeLink) {
+    public UserProfile(Long id,boolean isFollowing,String fullname,Long user_id, String bio, String github_link, String linkedIn_link, List<String> languages, List<String> skills, String profile_image, String resumeLink) {
         this.id = id;
         this.userId = user_id;
         this.fullname = fullname;
@@ -88,6 +91,15 @@ public class UserProfile {
         this.skills = skills;
         this.profile_image = profile_image;
         this.resumeLink = resumeLink;
+        this.isFollowing = isFollowing;
+    }
+
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean following) {
+        isFollowing = following;
     }
 
     public String getFullname() {

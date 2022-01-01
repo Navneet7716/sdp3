@@ -1,7 +1,10 @@
 package com.example.sdp3.Service;
 
 import com.example.sdp3.Pojo.Applicant;
+import com.example.sdp3.Pojo.Jobs;
 import com.example.sdp3.Repository.ApplicantRepository;
+import com.example.sdp3.Repository.JobRepository;
+import com.example.sdp3.Repository.UserProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,14 @@ import java.util.Optional;
 public class ApplicantService {
     @Autowired
     ApplicantRepository applicantRepository;
+
+    @Autowired
+    JobRepository jobRepository;
+
+    @Autowired
+    UserProfileRepository userProfileRepository;
+
+
 
     public Applicant addApplicant(Applicant newapplicant){
 
@@ -45,10 +56,26 @@ public class ApplicantService {
     }
 
     public List<Applicant> findApplicantByJOBId(Long id){
-        return applicantRepository.getApplicantByJob_id(id).orElseThrow(() -> new IllegalStateException("Applicant Not found"));
+        List<Applicant> applicants = applicantRepository.getApplicantByJob_id(id).orElseThrow(() -> new IllegalStateException("Applicant Not found"));
+        applicants.forEach(el -> {
+            el.setUserData(userProfileRepository.findAllByUserId(el.getUser_id()));
+        });
+        applicants.forEach(el -> {
+            el.setPostData(jobRepository.findById(el.getJob_id()).get());
+        });
+
+        return applicants;
     }
     public List<Applicant> findApplicantByUSERId(Long id){
-        return applicantRepository.getApplicantByUser_id(id).orElseThrow(() -> new IllegalStateException("Applicant Not found"));
+
+
+        List<Applicant> data = applicantRepository.getApplicantByUser_id(id).get();
+        data.forEach(el -> {
+            Jobs jobs = jobRepository.findById(el.getJob_id()).get();
+            el.setPostData(jobs);
+        });
+
+        return data;
     }
 
     public Applicant findApplicantByJOBIDandUSERID(Long job_id, Long user_id) {

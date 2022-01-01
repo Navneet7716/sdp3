@@ -22,25 +22,48 @@ public class Applicant {
     @NotNull
     private Long job_id;
 
-    @Column
+    @Column()
     @NotNull
-    private String status;
+    private Boolean status= false;
 
     @Column(updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at = new Date();
 
-    public Applicant(Long user_id, Long job_id, String status) {
+    @Transient
+    private Jobs postData;
+
+    @Transient
+    private UserProfile userData;
+
+    public Applicant(Long user_id, Long job_id, Boolean status, Jobs postData, UserProfile userData) {
         this.user_id = user_id;
         this.job_id = job_id;
         this.status = status;
+        this.postData = postData;
+        this.userData = userData;
+    }
+
+    public UserProfile getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserProfile userData) {
+        this.userData = userData;
     }
 
     public Applicant(){
     }
 
-    @PreUpdate
+    public Jobs getPostData() {
+        return postData;
+    }
+
+    public void setPostData(Jobs postData) {
+        this.postData = postData;
+    }
+
     public void setUpdatedAt() {
         this.created_at= new Date();
     }
@@ -73,11 +96,11 @@ public class Applicant {
         this.job_id = job_id;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

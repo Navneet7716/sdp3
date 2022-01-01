@@ -17,4 +17,5 @@ import java.util.Optional;
 public interface JobRepository extends PagingAndSortingRepository<Jobs, Long> {
 
     Page<Jobs> findAllByUserId(Long id, Pageable pageable);
+
 }

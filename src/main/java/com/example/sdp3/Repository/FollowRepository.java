@@ -23,5 +23,5 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     void unFollow(Long source_id, Long target_id);
 
     @Query("select f from Follow f where f.source_userid=?1 and f.target_userid=?2")
-    boolean findBySource_useridAndTarget_userid(Long source_id, Long target_id);
+    Follow findBySource_useridAndTarget_userid(Long source_id, Long target_id);
 }

@@ -1,19 +1,25 @@
 package com.example.sdp3.Service;
 
 
+import com.example.sdp3.Pojo.Applicant;
 import com.example.sdp3.Pojo.Posts;
+import com.example.sdp3.Repository.ApplicantRepository;
 import com.example.sdp3.Repository.JobRepository;
+import com.example.sdp3.Repository.UserProfileRepository;
+import com.example.sdp3.Security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.example.sdp3.Pojo.Jobs;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +27,12 @@ public class JobService{
 
     @Autowired
     JobRepository jobRepository;
+
+    @Autowired
+    UserProfileRepository userProfileRepository;
+
+    @Autowired
+    ApplicantRepository applicantRepository;
 
     public Jobs addJob(Jobs newJob){
         return jobRepository.save(newJob);
@@ -33,7 +45,26 @@ public class JobService{
     public Page<Jobs> getAllJobs(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
 
-        return jobRepository.findAll(paging);
+        Page<Jobs> pagedResults =  jobRepository.findAll(paging);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Long userid = ((UserDetailsImpl) principal).getId();
+
+        pagedResults.getContent().forEach((el) -> {
+
+            el.setUserData(userProfileRepository.findAllByUserId(el.getUser_id()));
+
+            Optional<Applicant> applicant = applicantRepository.getApplicantByJob_idAndAndUser_id(el.getId(),userid);
+            if(applicant.isPresent()) {
+                el.setApplied(true);
+            }
+
+        });
+
+//        pagedResults.getContent().stream().filter(el -> !Objects.equals(el.getUser_id(), userid)).toList().forEach(el -> System.out.println(el.getId()));
+
+        return pagedResults;
 //
 //        if(pagedResult.hasContent()) {
 //            return pagedResult.getContent();

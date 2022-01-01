@@ -118,7 +118,7 @@ public class PostsService {
 
         ArrayList<Long> followIds = new ArrayList<>();
 
-        follows.forEach(e -> followIds.add(e.getTarget_userid()) );
+        follows.forEach(e -> followIds.add(e.getTarget_userid()));
 
         Page<Posts> pagedResults = postsRepository.findAllByPostTypeAndUserIdIn("parent", followIds, paging);
 

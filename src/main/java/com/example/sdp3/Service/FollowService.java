@@ -35,9 +35,9 @@ public class FollowService {
 
     public void unfollow(Long source_id, Long target_id) {
 
-        boolean b = followRepository.findBySource_useridAndTarget_userid(source_id, target_id);
+        Follow b = followRepository.findBySource_useridAndTarget_userid(source_id, target_id);
 
-        if (!b) {
+        if (b == null) {
             throw new IllegalStateException("Couldn't find record.");
         }
 
