@@ -17,10 +17,10 @@ public class Follow {
 
 
     @Column(nullable = false)
-    private Long source_userid;
+    private Long sourceUserid;
 
     @Column(nullable = false)
-    private Long target_userid;
+    private Long targetUserid;
 
     @Column(updatable = false)
     @CreatedDate
@@ -42,16 +42,16 @@ public class Follow {
 
     public Follow(Long id, Long source_userid, Long target_userid) {
         this.id = id;
-        this.source_userid = source_userid;
-        this.target_userid = target_userid;
+        this.sourceUserid = source_userid;
+        this.targetUserid = target_userid;
     }
 
     @Override
     public String toString() {
         return "Follow{" +
                 "id=" + id +
-                ", source_userid=" + source_userid +
-                ", target_userid=" + target_userid +
+                ", source_userid=" + sourceUserid +
+                ", target_userid=" + targetUserid +
                 ", created_at=" + created_at +
                 '}';
     }
@@ -65,18 +65,18 @@ public class Follow {
     }
 
     public Long getSource_userid() {
-        return source_userid;
+        return sourceUserid;
     }
 
     public void setSource_userid(Long source_userid) {
-        this.source_userid = source_userid;
+        this.sourceUserid = source_userid;
     }
 
     public Long getTarget_userid() {
-        return target_userid;
+        return targetUserid;
     }
 
     public void setTarget_userid(Long target_userid) {
-        this.target_userid = target_userid;
+        this.targetUserid = target_userid;
     }
 }

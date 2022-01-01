@@ -13,15 +13,14 @@ import java.util.Optional;
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
-    @Query("select f from Follow f where f.target_userid=?1")
+    @Query("select f from Follow f where f.targetUserid=?1")
     Optional<List<Follow>> getFollowers(Long targetID);
 
-    @Query("select f from Follow f where f.source_userid=?1")
+    @Query("select f from Follow f where f.sourceUserid=?1")
     Optional<List<Follow>> getFollow(Long sourceID);
 
-    @Query("delete from Follow f where f.source_userid=?1 and f.target_userid=?2")
-    void unFollow(Long source_id, Long target_id);
+    void deleteBySourceUseridAndTargetUserid(Long source_id, Long target_id);
 
-    @Query("select f from Follow f where f.source_userid=?1 and f.target_userid=?2")
+    @Query("select f from Follow f where f.sourceUserid=?1 and f.targetUserid=?2")
     Follow findBySource_useridAndTarget_userid(Long source_id, Long target_id);
 }

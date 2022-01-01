@@ -98,8 +98,24 @@ public class FollowController {
 
     }
 
+    @DeleteMapping("/unfollow")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<FollowResponse> unfollowit(@RequestBody Follow follow) {
+        FollowResponse followResponse = new FollowResponse();
 
+        try {
+            followService.unfollow(follow.getSource_userid(),follow.getTarget_userid());
+            followResponse.message="success";
+            followResponse.error=false;
+            return ResponseEntity.ok(followResponse);
+        }
+        catch (Exception e) {
+            followResponse.error= true;
+            followResponse.message=e.getMessage();
+            return ResponseEntity.status(404).body(followResponse);
+        }
 
+    }
 
 
 

@@ -4,6 +4,7 @@ import com.example.sdp3.Pojo.Follow;
 import com.example.sdp3.Repository.FollowRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -33,7 +34,8 @@ public class FollowService {
 
     }
 
-    public void unfollow(Long source_id, Long target_id) {
+        @Transactional
+        public void unfollow(Long source_id, Long target_id) {
 
         Follow b = followRepository.findBySource_useridAndTarget_userid(source_id, target_id);
 
@@ -41,7 +43,7 @@ public class FollowService {
             throw new IllegalStateException("Couldn't find record.");
         }
 
-        followRepository.unFollow(source_id,target_id);
+        followRepository.deleteBySourceUseridAndTargetUserid(source_id,target_id);
 
 
     }
