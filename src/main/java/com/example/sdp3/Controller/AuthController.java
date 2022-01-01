@@ -24,17 +24,13 @@ import com.example.sdp3.payload.response.JwtResponse;
 import com.example.sdp3.payload.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -140,4 +136,12 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!",true,null));
     }
+
+
+    @GetMapping("/getUserEmail/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public String getUserEmail(@PathVariable Long id) {
+        return userRepository.findById(id).get().getEmail();
+    }
+
 }
