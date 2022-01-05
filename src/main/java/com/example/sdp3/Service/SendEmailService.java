@@ -1,6 +1,7 @@
 package com.example.sdp3.Service;
 
 import com.example.sdp3.Pojo.Mail;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
