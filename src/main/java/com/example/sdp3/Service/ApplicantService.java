@@ -68,10 +68,9 @@ public class ApplicantService {
     }
     public List<Applicant> findApplicantByUSERId(Long id){
 
-
-        List<Applicant> data = applicantRepository.getApplicantByUser_id(id).get();
+        List<Applicant> data = applicantRepository.getApplicantByUser_id(id).orElseThrow(() -> new IllegalStateException("not found"));
         data.forEach(el -> {
-            Jobs jobs = jobRepository.findById(el.getJob_id()).get();
+            Jobs jobs = jobRepository.findById(el.getJob_id()).orElseThrow(() -> new IllegalStateException("f"));
             el.setPostData(jobs);
         });
 
