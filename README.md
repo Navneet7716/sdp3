@@ -2,9 +2,9 @@
 This is a website for finding jobs and creating a professional portfolio. And also for keeping up with the community in which you are most
 interested in.
 
-Creators -> Navneet Kumar Singh, Aditya Khandelwal, Udbhav Govindu
+##### Creators -> Navneet Kumar Singh, Aditya Khandelwal, Udbhav Govindu
 
-#Tech Stack used:- 
+### Tech Stack used:- 
 React.js, Spring Boot with PostgreSql.
 
 # Project URL :-
